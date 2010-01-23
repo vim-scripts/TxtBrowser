@@ -1,99 +1,91 @@
 "Script_name: txt.vim
-"Maintainer: Yongping Guo
-"Mail: guoyoooping@163.com
+"Author: guoyoooping@163.com
+"Date: 2010/01/23
+"Release_version: txt_1_0_6
 "Description: syntax for plain/text.
-"Where_to_patch: $HOME/.vim/syntax or $VIMRUNTIME/syntax/
-"Version: 1.0
-"Date: 2009-12-26
-"Language: plain/text :)
+"Language: text/plain :)
+"Location: $HOME/.vim/syntax or $VIMRUNTIME/syntax/
 "Install_detail:
         "1. put this file in $HOME/.vim/syntax or $VIMRUNTIME/syntax/ 
         "2. Add the following line in your .vimrc:
-        "au BufRead,BufNewFile *.txt setlocal ft=txt
-        "
+        "syntax on "syntax highlighting on
+        "let tlist_txt_settings = 'txt;c:content;f:figures;t:tables' "language definition for plain text
+        "au BufRead,BufNewFile *.txt setlocal ft=txt "syntax highlight for txt.vim 
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" pre set.
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-syn clear
-syn case ignore
-hi clear Normal
-set bg&
-colo default "desert
-set guifont=Monospace\ 11"set the gui font. ĞÂËÎÌå:h8:cGB2312"
-set linespace=5"row space.
+syn case ignore "set case insensitive.
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key words definition.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "Keywords
 syn keyword txtTodo todo fixme note debug comment notice
-syn keyword txtError error bug caution: dropped
+syn keyword txtError error bug caution dropped
 
 "txtComment: Lines that start with '#'
-"ÒÔ#ºÅ´òÍ·µÄĞĞÎª×¢ÊÍÎÄ±¾
+"ä»¥#å·æ‰“å¤´çš„è¡Œä¸ºæ³¨é‡Šæ–‡æœ¬
 syn match   txtComment '^#.*$' contains=txtTodo
 
 "txtTitle: Lines start with digit and '.'
-"±êÌâÎÄ±¾: Ç°ÃæÓĞÈÎÒâ¸ö¿Õ¸ñ,Êı×Ö.[Êı×Ö.]´òÍ·, ²¢ÇÒ¸ÃĞĞÀï²»º¬ÓĞ,.¡££¬µÈ±êµã·ûºÅ
-syn match txtTitle "^\(\d\+\.\)\+\s*[^,¡££¬]\+$"
+"æ ‡é¢˜æ–‡æœ¬: å‰é¢æœ‰ä»»æ„ä¸ªç©ºæ ¼,æ•°å­—.[æ•°å­—.]æ‰“å¤´, å¹¶ä¸”è¯¥è¡Œé‡Œä¸å«æœ‰,.ã€‚ï¼Œç­‰æ ‡ç‚¹ç¬¦å·
+syn match txtTitle "^\(\d\+\.\)\+\s*[^,ã€‚ï¼Œ]\+$"
 
 "txtTitle: Lines start with Chinese digit and '.'
-"±êÌâÎÄ±¾: ºº×ÖÊı×Ö¼Ó'.¡¢'´òÍ·£¬ÇÒ¸ÃĞĞ²»º¬,.¡££¬±êµã·ûºÅ
-syn match txtTitle "^\([Ò»¶şÈıËÄÎåÁùÆß°Ë¾ÅÊ®][¡¢.]\)\+\s*[^,¡££¬]\+$"
+"æ ‡é¢˜æ–‡æœ¬: æ±‰å­—æ•°å­—åŠ '.ã€'æ‰“å¤´ï¼Œä¸”è¯¥è¡Œä¸å«,.ã€‚ï¼Œæ ‡ç‚¹ç¬¦å·
+syn match txtTitle "^\([ä¸€äºŒä¸‰å››äº”å…­ä¸ƒå…«ä¹å][ã€.]\)\+\s*[^,ã€‚ï¼Œ]\+$"
 
 "txtTitle: Lines start with digit
-"±êÌâÎÄ±¾: ÒÔÊı×Ö´òÍ·, ÖĞ¼äÓĞ¿Õ¸ñ, ºó¸úÈÎÒâÎÄ×Ö. ÇÒ¸ÃĞĞ²»º¬ÓĞ,.¡££¬±êµã·ûºÅ
-syn match txtTitle "^\d\s\+.\+\s*[^,¡££¬]$"
+"æ ‡é¢˜æ–‡æœ¬: ä»¥æ•°å­—æ‰“å¤´, ä¸­é—´æœ‰ç©ºæ ¼, åè·Ÿä»»æ„æ–‡å­—. ä¸”è¯¥è¡Œä¸å«æœ‰,.ã€‚ï¼Œæ ‡ç‚¹ç¬¦å·
+syn match txtTitle "^\d\s\+.\+\s*[^,ã€‚ï¼Œ]$"
 
 "txtList: Lines start with space and then '-+*.'
-"ÁĞ±íÎÄ±¾: ÈÎÒâ¿Õ¸ñ´òÍ·, ºó¸úÒ»¸ö[-+*.]
+"åˆ—è¡¨æ–‡æœ¬: ä»»æ„ç©ºæ ¼æ‰“å¤´, åè·Ÿä¸€ä¸ª[-+*.]
 syn match txtList    '^\s*[-+*.] [^ ]'me=e-1
 
 "txtList: Lines start with space and then digit
-"ÁĞ±íÎÄ±¾: ÈÎÒâ¿Õ¸ñ´òÍ·, ºó¸úÒ»¸ö(Êı×Ö) »ò (×ÖÄ¸) ´òÍ·µÄÎÄ±¾ĞĞ
+"åˆ—è¡¨æ–‡æœ¬: ä»»æ„ç©ºæ ¼æ‰“å¤´, åè·Ÿä¸€ä¸ª(æ•°å­—) æˆ– (å­—æ¯) æ‰“å¤´çš„æ–‡æœ¬è¡Œ
 syn match txtList    '^\s*(\=\([0-9]\+\|[a-zA-Z]\))'
 
 "txtList: Lines start with space and then digit and '.'
-"ÁĞ±íÎÄ±¾: ÖÁÉÙÒ»¸ö¿Õ¸ñ´òÍ·, [Êı×Ö.]´òÍ·, µ«Ëæºó²»ÄÜ¸úÊı×Ö(ÅÅ³ı°Ñ5.5ÕâÑùµÄÎÄ
-"±¾µ±³ÉÁĞ±í) 
+"åˆ—è¡¨æ–‡æœ¬: è‡³å°‘ä¸€ä¸ªç©ºæ ¼æ‰“å¤´, [æ•°å­—.]æ‰“å¤´, ä½†éšåä¸èƒ½è·Ÿæ•°å­—(æ’é™¤æŠŠ5.5è¿™æ ·çš„æ–‡
+"æœ¬å½“æˆåˆ—è¡¨) 
 syn match txtList "^\s\+\d\+\.\d\@!"
 
 "txtApostrophe: text in the apostrophe
-"µ¥ÒıºÅÄÚÎÄ×Ö
-syn match   txtApostrophe  '`[^`]\+`'hs=s+1,he=e-1
+"å•å¼•å·å†…æ–‡å­—
+syn match   txtApostrophe  '\'[^\']\+\''hs=s+1,he=e-1
 
 "txtQuotes: text in the quotoes
-"Ë«ÒıºÅÄÚÎÄ×Ö, °üÀ¨È«½Ç°ë½Ç, ×÷ÓÃ·¶Î§×î¶àÁ½ĞĞ
-syn match   txtQuotes     '["¡°][^"¡±]\+\(\n\)\=[^"¡±]*["¡±]'hs=s+1,he=e-1
+"åŒå¼•å·å†…æ–‡å­—, åŒ…æ‹¬å…¨è§’åŠè§’, ä½œç”¨èŒƒå›´æœ€å¤šä¸¤è¡Œ
+syn match   txtQuotes     '["â€œ][^"â€]\+\(\n\)\=[^"â€]*["â€]'hs=s+1,he=e-1
 
 "txtParentesis: text in the parentesis
-"À¨ºÅÄÚÎÄ×Ö, ²»ÔÚĞĞÊ×(ÎªÁËºÍtxtListÇø±ğ), ×÷ÓÃ·¶Î§×î¶àÁ½ĞĞ
-syn match   txtParentesis "[(£¨][^)£©]\+\(\n\)\=[^)£©]*[)£©]" contains=txtLink
+"æ‹¬å·å†…æ–‡å­—, ä¸åœ¨è¡Œé¦–(ä¸ºäº†å’ŒtxtListåŒºåˆ«), ä½œç”¨èŒƒå›´æœ€å¤šä¸¤è¡Œ
+syn match   txtParentesis "[(ï¼ˆ][^)ï¼‰]\+\(\n\)\=[^)ï¼‰]*[)ï¼‰]" contains=txtUrl
 
-"txtBrackets: text in the quotoes
-"ÆäËüÀ¨ºÅÄÚÎÄ×Ö, ×÷ÓÃ·¶Î§×î¶àÁ½ĞĞ, ´óÀ¨ºÅÎŞĞĞÊıÏŞÖÆ
-syn match txtBrackets     '<[^<]\+\(\n\)\=[^<]*>'hs=s+1,he=e-1 contains=txtLink
-syn match txtBrackets     '\[[^\[]\+\(\n\)\=[^\[]*\]'hs=s+1,he=e-1 contains=txtLink
-syn region txtBrackets    matchgroup=txtOperator start="{"        end="}" contains=txtLink
+"txtBrackets: text in the brackets
+"å…¶å®ƒæ‹¬å·å†…æ–‡å­—, ä½œç”¨èŒƒå›´æœ€å¤šä¸¤è¡Œ, å¤§æ‹¬å·æ— è¡Œæ•°é™åˆ¶
+syn match txtBrackets     '<[^<]\+\(\n\)\=[^<]*>'hs=s+1,he=e-1 contains=txtUrl
+syn match txtBrackets     '\[[^\[]\+\(\n\)\=[^\[]*\]'hs=s+1,he=e-1 contains=txtUrl
+syn region txtBrackets    matchgroup=txtOperator start="{"        end="}" contains=txtUrl
 
 "link url
-syn match txtLink '\<[A-Za-z0-9_.-]\+@\([A-Za-z0-9_-]\+\.\)\+[A-Za-z]\{2,4}\>\(?[A-Za-z0-9%&=+.,@*_-]\+\)\='
-syn match txtLink   '\<\(\(https\=\|ftp\|news\|telnet\|gopher\|wais\)://\([A-Za-z0-9._-]\+\(:[^ @]*\)\=@\)\=\|\(www[23]\=\.\|ftp\.\)\)[A-Za-z0-9%._/~:,=$@-]\+\>/*\(?[A-Za-z0-9/%&=+.,@*_-]\+\)\=\(#[A-Za-z0-9%._-]\+\)\='
+syn match txtUrl '\<[A-Za-z0-9_.-]\+@\([A-Za-z0-9_-]\+\.\)\+[A-Za-z]\{2,4}\>\(?[A-Za-z0-9%&=+.,@*_-]\+\)\='
+syn match txtUrl   '\<\(\(https\=\|ftp\|news\|telnet\|gopher\|wais\)://\([A-Za-z0-9._-]\+\(:[^ @]*\)\=@\)\=\|\(www[23]\=\.\|ftp\.\)\)[A-Za-z0-9%._/~:,=$@-]\+\>/*\(?[A-Za-z0-9/%&=+.,@*_-]\+\)\=\(#[A-Za-z0-9%._-]\+\)\='
 
 "email text:
 syn match txtEmailMsg '^\s*\(From\|De\|Sent\|To\|Para\|Date\|Data\|Assunto\|Subject\):.*'
 syn match txtEmailQuote '^\(>\($\| \)\)\+'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"ÀàhtmlÎÄ±¾
+"ç±»htmlæ–‡æœ¬
 "syn match   txtBold       '\*[^*[:blank:]].\{-}\*'hs=s+1,he=e-1
-"syn match txtItalic "^\s\+.\+$" "Ğ±ÌåÎÄ±¾
+"syn match txtItalic "^\s\+.\+$" "æ–œä½“æ–‡æœ¬
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " color definitions (specific)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-hi txtLink        term=bold        cterm=bold  ctermfg=blue    gui=underline     guifg=blue
+"hi txtUrl        term=bold        cterm=bold  ctermfg=blue    gui=underline     guifg=blue
+hi link txtUrl      Underlined"ModeMsg"Tabline"PmenuSbar
 hi link txtTitle      Title"ModeMsg"Tabline"PmenuSbar
 hi link txtList         SignColumn"Pmenu"DiffText"Statement
 hi link txtComment      Special "Comment
@@ -106,6 +98,5 @@ hi link txtTodo  Todo
 hi link txtEmailMsg     Structure
 hi link txtEmailQuote   Structure
 
-"set background=dark
 let b:current_syntax = 'txt'
 " vim:tw=0:et

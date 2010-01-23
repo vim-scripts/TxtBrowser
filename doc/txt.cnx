@@ -1,0 +1,355 @@
+*txt_cn.txt*	"纯文本浏览器": 浏览纯文本的插件 
+
+适用Vim版本: 6.0 and above
+<Author: guoyoooping@163.com>
+<Date: 2010/01/23>
+<Release version: 1.1>
+
+ 1 简介 						|txt-introduction|
+ 2 语法元素的定义和说明					|txt-element|
+       2.1 文本标题					|txt-title|
+       2.2 文本图					|txt-figure|
+       2.3 文本表					|txt-table|
+       2.4 文本关键字					|txt-keywords|
+       2.5 文本超键接					|txt-url|
+       2.6 文本Email的关键词				|txt-email|
+       2.7 文本引号内文字 				|txt-quotes|
+       2.9 文本括号内文字				|txt-bracket|
+       2.9 文本列举					|txt-list|
+ 3 安装指南	 					|txt-install|
+       3.1 安装程序
+       3.2 可能会遇到的问题
+       3.3 安装可选项
+ 4 版权 						|txt-license|
+ 5 已知的问题						|txt-bugs|
+ 6 下一步计划						|txt-todo|
+ 7 发行记录~					 	|txt-changelog|
+
+==============================================================================
+1. 简介~						*txt-introduction*
+
+"纯文本浏览器"是为Vim写的一个方便阅读和浏览纯文本的插件. 该插件使你的纯文本也有
+语法高亮, 方便阅读; 同时它可以自动生成文档的目录树, 点击就可实现跳转, 方便浏览.
+它具有以下特点: 
+
+	* 自动在taglist窗口显示目录树, 图列表, 表列表. 点击即可跳转到正文定义处.
+	* 在taglist窗口自动高亮当前所在的章节.
+	* 高亮纯文本文件的关键元素(关键字, 超级链接, 括号内文字等).
+	* 用于实现上述功能只需要安装插件, 不像别的插件那样需要在文档里做任何特
+	殊标记, 兼容性强. 例如任一个rfc文档打开即可实现目录树和语法高亮.
+	* 拷贝taglist窗口里的目录到正文里, 即可以做为正文的目录.
+	* 用于语法高亮的文本元素可以随意定制, 真正实现个性化.
+	* 无需要修改, 同时支持gvim和控制台, 同时支持Unix和Windows操作系统.
+
+目的是为了介绍"纯文本浏览器"的各种语法的定义. 本文是以纯文本写成的, 因此你可以
+把本文作为一个演示语法高亮和浏览目录树的例子, 如果你已经安装了"纯文本浏览器"插
+件, 本文将具有语法高亮, 并且可以在taglist窗口显示本文的目录结构, 点击目录就可以
+实现跳转. 如果你还没有安装"纯文本浏览器"(安装请参考第3节: 安装指南), 那本文就是
+一个普通的文本文件, 你可以用任何编辑器打开它, 除了为Vim帮助文档做的标记外(因为
+本文将作为帮助文档随你的插件一起安装), 你不会看到像其它插件为了实现跳转而加的奇
+怪的标记.
+
+==============================================================================
+2. 关键元素的定义                              			*txt-element*
+
+------------------------------------------------------------------------------
+2.1 文本标题                                  			*txt-title*
+
+标题的格式:
+
+通过编号来标定标题, 如: 1，1.1，1.1.1, 注意标题应该顶格写, 数字和标题名之间最
+好留有空格. 通过数字的层数多少来设定层次, 如下面分别是三级标题的例子:
+
+1000001. 标题1 
+~顶格写,~~~~~这里留一个空格
+
+本段文字是一级标题的内容. 注意数字顶格写, 数字和后面标题名留一个空格.
+
+1000001.1 标题1.1
+
+本段文字是二级标题的内容.
+
+1000001.1.1 标题1.1.1
+
+本段文字是三级标题的内容.
+
+标签窗口最多只支持三级标题, 而语法高亮没有这个限制. 下面是标签窗口关于三级标题
+的定义:
+
+--regex-txt=/^([0-9]+\.?[ \t]+)([^,]+$)/\1\2/c,content/
+--regex-txt=/^(([0-9]+\.){1}([0-9]+\.?)[ \t]+)([^,]+$)/.   \1\4/c,content/
+--regex-txt=/^(([0-9]+\.){2}([0-9]+\.?)[ \t]+)([^,]+$)/.       \1\4/c,content/
+
+下面是语法页关于标题的定义. 注意这里用到的是Vim的正则表达式(和普通的正则表达式
+稍有不同, 请参考":help regex").
+
+syn match txtTitle "^\(\d\+\.\)\+\s*[^,。，]\+$"
+syn match txtTitle "^\([一二三四五六七八九十][、.]\)\+\s*[^,。，]\+$"
+syn match txtTitle "^\d\s\+.\+\s*[^,。，]$"
+
+标题元素将同时用于列出文档结构和语法高亮.
+
+------------------------------------------------------------------------------
+2.2 文本图                                  			*txt-figure*
+
+以空格打头, 后跟关键字"figure"的行定义为"文本图". 如下段文字中, 包含 "Figure 1:
+Example Message Flow"的那一行(注意该行是以空格打头的)是一个文本图. 该行将被列在
+taglist窗口中.
+
+文本图的定义在文件".ctags"里, 具体如下, 你可以根据你的需要重新定义.
+
+--regex-txt=/^[ \t]+(figure[ \t]+[0-9a-zA-Z]+([.: ]([ \t]*.+)?)?$)/\1/f,figures/i
+--regex-txt=/^[ \t]*(图[ \t]*[0-9a-zA-Z]+[.: ][ \t]*.+$)/\1/f,figures/i
+
+           |  F1 MESSAGE          |                         |
+           |--------------------> |  F2 MESSAGE             |
+           |                      | ----------------------->|
+           |                      |  F3 200 OK              |
+           |                      | <-----------------------|
+           |  F4 200 OK           |                         |
+           |<-------------------- |                         |
+           |                      |                         |
+        User 1                  Proxy                    User 2
+
+                   Figure 1: Example Message Flow
+
+本元素的定义主要用于列出文件的结构图.
+
+------------------------------------------------------------------------------
+2.3 文本表                                  			*txt-table*
+
+以空格打头, 后跟关键字"table"的行定义为"文本表". 如下段文字中, 包含 "Table 1:
+Summary of header fields, A--O"的那一行(注意该行是以空格打头的)是一个文本图. 该
+行将被列在 taglist窗口中.
+
+文本表的定义在文件".ctags"里, 具体如下, 你可以根据你的需要重新定义.
+
+--regex-txt=/^[ \t]+(table[ \t]+[0-9a-zA-Z]+([.: ]([ \t]*.+)?)?$)/\1/t,tables/i
+--regex-txt=/^[ \t]*(表[ \t]*[0-9a-zA-Z]+[.: ][ \t]*.+$)/\1/t,tables/i
+
+                   Header Field       where  proxy  MESSAGE
+                   __________________________________________
+                   Accept               R              -
+                   Content-Encoding                    o
+                   Max-Forwards        R      amr      m
+                   Organization               ar       o
+
+                   Table 1: Summary of header fields, A--O
+
+本元素的定义主要用于列出文件的结构图.
+
+------------------------------------------------------------------------------
+2.4 文本关键词                                  		*txt-keywords*
+
+下面的关键字定义为"文本关键字", 其定义在"txt.vim"文件中. 它们在文本中将根据重要
+程度显示为不同的颜色(和你正在使用的coloscheme有关). 你也可以将你关心的关键字加
+入其中.
+
+syn keyword txtTodo todo fixme note debug comment notice
+syn keyword txtError error bug caution dropped
+
+本元素的定义主要用于语法高亮.
+
+------------------------------------------------------------------------------
+2.5 文本超键接                                  		*txt-url*
+
+文本中的超级键接定义为"文本超级键接", 主要包括网址, Email地址, ftp地址等, 请参
+考rfc1738(Uniform Resource Locators (URL))和rfc3986(Uniform Resource Identifier
+(URI)获得超级链接更多的详情, 网页上的超级链接一般显示为带下划线的蓝色, 因为我们
+也将尽量将其显示为带下划线的蓝色(具体表现根据你的coloscheme会稍有不同), 下面是
+例子:
+
+	guoyoooping@163.com
+	http://guoyoooping.blog.163.com/blog
+	ftp://192.168.1.5/ftpboot/username/example.txt
+
+本元素的定义主要用于语法高亮.
+
+------------------------------------------------------------------------------
+2.6 文本Email关键字                                  		*txt-email*
+
+Email中的关键字定义如下, 例子如下:
+
+syn match txtEmailMsg '^\s*\(From\|De\|Sent\|To\|Para\|Date\|Data\|Assunto\|Subject\):.*'
+syn match txtEmailQuote '^\(>\($\| \)\)\+'
+
+	From: San Zhang(R&D Center Beijing) 
+	Sent: 2008年11月27日 13:17
+	To: Si Li, Wu Wang, Liu Chen
+	Subject: RE: 你们都不踢球?
+
+本元素的定义主要用于语法高亮.
+
+------------------------------------------------------------------------------
+2.7 文本引号内文字                                  		*txt-quotes*
+
+大多数情况下, 人们用引号把文字括起来以引起注意, 因此我们定义在引号内的文字为"文
+本引号内文字", 并为其添加语法高亮, 目的是为了引起人们的注意. 下面是定义和例子:
+
+syn match   txtQuotes     '["“][^"”]\+\(\n\)\=[^"”]*["”]'hs=s+1,he=e-1
+
+例子:
+
+	"good example"
+
+本元素的定义主要用于语法高亮.
+
+------------------------------------------------------------------------------
+2.8 文本括号内文字                                 		*txt-bracket*
+
+多数情况下, 人们需要关注用括号内的文字, 因此我们定义在括号内的文字为"文本括号内
+文字", 并为其添加语法高亮, 目的是为了引起人们的注意. 这里的括号包括圆括号, 尖括
+号, 中括号和大括号, 下面是定义和例子:
+
+syn match   txtParentesis "[(（][^)）]\+\(\n\)\=[^)）]*[)）]" contains=txtUrl
+syn match txtBrackets     '<[^<]\+\(\n\)\=[^<]*>'hs=s+1,he=e-1 contains=txtUrl
+syn match txtBrackets     '\[[^\[]\+\(\n\)\=[^\[]*\]'hs=s+1,he=e-1 contains=txtUrl
+syn region txtBrackets    matchgroup=txtOperator start="{"        end="}" contains=txtUrl
+
+例子:
+
+	(good example)
+	<good example>
+	[good example]
+	{good example}
+
+本元素的定义主要用于语法高亮.
+
+------------------------------------------------------------------------------
+2.9 文本列举                                  			*txt-list*
+
+有时人们在列举一组相似的事情时, 喜欢在这些列举的一行前冠以"*", "-"等符号, 我们
+定义以这些符号打头的行(有些符合如"5."需要前面有空格)为"文本列举". 下面是定义和
+例子:
+
+syn match txtList    '^\s*[-+*.] [^ ]'me=e-1
+syn match txtList    '^\s*(\=\([0-9]\+\|[a-zA-Z]\))'
+syn match txtList "^\s\+\d\+\.\d\@!"
+
+例子:
+
+        - item1: this is the first item.
+        + item1: this is the first item.
+        * item1: this is the first item.
+        . item2: this is the second item.
+        3)item3: this is the third item.
+        a)item3: this is the third item.
+        5.item3: this is the third item.
+
+本元素的定义主要用于语法高亮.
+
+==============================================================================
+3. 安装指南~ 							*txt-install*
+
+3.1 安装程序
+
+1)请首先安装taglist插件 (http://www.vim.org/scripts/script.php?script_id=273), 
+我相信玩Vim的没有几个人没有安装这个插件吧.
+
+2)下载插件后解压缩后会得到三个文件: .ctag, txt.txt和 txt.vim. 把这三个文件分别
+拷贝到下列目录下(请注意Windows下是 $HOME/vimfile).
+
+	$HOME/.vim/syntax/txt.vim
+	$HOME/.vim/doc/txt.txt(别忘了打开该文件执行"helptag ."命令)
+	$HOME/.ctags
+
+3)在你的.vimrc文件里加入下面三行:
+
+	syntax on
+	let tlist_txt_settings = 'txt;c:content;f:figures;t:tables'
+	au BufRead,BufNewFile *.txt setlocal ft=txt
+
+好了, 现在用Vim打开你的纯文本文件, 执行"Tlist"命令, 现在你看到了什么? 你的纯文
+本将拥有漂亮的树状标签和语法高亮.
+
+3.2 可能会遇到的问题
+
+例1: Windows用户出现最多的问题是将.ctags放错位置, 因为很多人不清楚自己的HOME目
+录到底在哪里. 假设我登录Windows的用户名用winuser, 通常情况下, 我的$HOME应该是
+C:\Documents and Settings\winuser, 把.ctags放到该目录下即可.
+
+一个简单的判断你的HOME目录的方法是, 打开"开始-运行-cmd", 这时跳出来的dos窗口所
+在的目录一般情况下就是你的HOME目录.
+
+安装完成后用vim打开本文件(txt.txt), 此时你应该能看到语法高亮了. 执行":Tlist"打
+开taglist窗口, 你应该能看到本文的目录树被列在了taglist 窗口里. 如果还有问题, 
+你可以提交bug报告(guoyoooping@163.com).
+
+3.3 安装可选项
+
+很多人(尤其是Windows用户)不愿意把这些文件安装到$HOME目录下, 而是安装到Gvim的安
+装目录下, 这也是可以的. 假设你的vim的安装路径为"C:\Program Files\Vim", 该插件
+的安装目录应该为: 
+
+	C:\Program Files\Vim\vimfiles\syntax\txt.vim
+	C:\Program Files\Vim\vimfiles\doc\txt.txt(别忘了执行"helptag ."命令)
+	$HOME/.ctags
+
+也有人甚至连.ctags文件都不愿意放到$HOME目录下, 假设你想把.ctags文件"C:\Program
+Files\Vim\vimfiles\.ctags"目录下, 你需要在你的 .vimrc里加上下面一行:
+
+if (has("win32"))
+  Tlist_Ctags_Cmd = 'ctags.exe --options=C:\Program Files\Vim\vimfiles\.ctags'
+endif
+
+请注意这么做会屏蔽ctags调用$HOME/.ctags及其它位置下的.ctags文件, 大多数情况下这
+不是问题, 但是我必须告诉你这一副作用.
+
+==============================================================================
+4. 版权~ 							*txt-license*
+
+Permission is hereby granted to use and distribute the "Plain Text Browser"
+plugin, with or without modifications, provided that this copyright notice is
+copied with it. Like anything else that's free, "Plain Text Browser"
+plugin.vim is provided *as is* and comes with no warranty of any kind, either
+expressed or implied. In no event will the copyright holder be liable for any
+damamges resulting from the use of this software.
+
+==============================================================================
+5. 已知的问题~							 *txt-bugs*
+
+1) 如果你是linux用户, 那么你很幸运, "文本浏览器"插件工作得很好, 如果你是
+Windows用户, 如果文件名或文件的路径上有中文字符的话, 树状标签栏可能不能正确的
+显示. 这是 taglist的问题, 用C语言文件试验效果也是一样的.
+
+2) 如果文件的fenc值和enc值不同的话, 中文编码在taglist窗口不能正确显示, 可能显
+示为<cc><ce><ec>的样子. 解决办法为将它们设置成一致, 保存, 并刷新即可
+(":TlisUpdate").
+
+==============================================================================
+6. 下一步计划~					 		*txt-todo*
+
+1) 支持中文数字打头的标题, 如: 一、这是一个标题.
+
+2) 中文表和图标签的完善.
+
+3) 考虑是否支持类似于txt2tags风格的标题表示方法.
+
+==============================================================================
+
+7. 发行记录~					 	*txt-changelog*
+
+2009-12-26 1.0
+	Initial upload
+2009-12-29 1.0.2
+	1) delete some the personal configuration in txt.vim, it might not be
+	fit for all.
+	2) Add an example file to illustrate.
+2010-01-01 1.0.3
+	Add the help document.
+2010-01-03  1.0.4
+	Update the help document. Give the definition of every element and
+	examples.
+2010-01-10  1.0.5
+	1) Delete all the personal setting in txt.vim, such as "hi clear
+	Normal", "set bg&", users should set their own prefer setting.
+	2) Change the definition of the figure in .ctags. Being compatible
+	with tables without name. such as expression like "figure 1".
+	3) Change the filetype of the txt.txt to "txt", Opening the txt.txt
+	with vim directly could have a preview of this plugin. 
+2010-01-16  1.0.6
+	1) Add the Chinese help document. You can install or don't install it.
+
+==============================================================================
+
+vim:tw=78:ts=8:noet:ft=txt:
