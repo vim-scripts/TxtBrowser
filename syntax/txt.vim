@@ -1,7 +1,7 @@
 "Script_name: txt.vim
 "Author: guoyoooping@163.com
-"Date: 2010/01/23
-"Release_version: txt_1_0_6
+"Date: 2010/02/19
+"Release: 1.0.6
 "Description: syntax for plain/text.
 "Language: text/plain :)
 "Location: $HOME/.vim/syntax or $VIMRUNTIME/syntax/
@@ -52,21 +52,21 @@ syn match txtList "^\s\+\d\+\.\d\@!"
 
 "txtApostrophe: text in the apostrophe
 "单引号内文字
-syn match   txtApostrophe  '\'[^\']\+\''hs=s+1,he=e-1
+syn match   txtApostrophe  '\'[^\']\+\''hs=s+1,he=e-1 contains=txtUrl,txtReference
 
 "txtQuotes: text in the quotoes
 "双引号内文字, 包括全角半角, 作用范围最多两行
-syn match   txtQuotes     '["“][^"”]\+\(\n\)\=[^"”]*["”]'hs=s+1,he=e-1
+syn match   txtQuotes     '["“][^"”]\+\(\n\)\=[^"”]*["”]'hs=s+1,he=e-1 contains=txtUrl,txtReference
 
 "txtParentesis: text in the parentesis
 "括号内文字, 不在行首(为了和txtList区别), 作用范围最多两行
-syn match   txtParentesis "[(（][^)）]\+\(\n\)\=[^)）]*[)）]" contains=txtUrl
+syn match   txtParentesis "[(（][^)）]\+\(\n\)\=[^)）]*[)）]" contains=txtUrl,txtReference
 
 "txtBrackets: text in the brackets
 "其它括号内文字, 作用范围最多两行, 大括号无行数限制
-syn match txtBrackets     '<[^<]\+\(\n\)\=[^<]*>'hs=s+1,he=e-1 contains=txtUrl
-syn match txtBrackets     '\[[^\[]\+\(\n\)\=[^\[]*\]'hs=s+1,he=e-1 contains=txtUrl
-syn region txtBrackets    matchgroup=txtOperator start="{"        end="}" contains=txtUrl
+syn match txtBrackets     '<[^<]\+\(\n\)\=[^<]*>'hs=s+1,he=e-1 contains=txtUrl,txtReference
+syn match txtBrackets     '\[[^\[]\+\(\n\)\=[^\[]*\]'hs=s+1,he=e-1 contains=txtUrl,txtReference
+"syn region txtBrackets    matchgroup=txtOperator start="{"        end="}" contains=txtUrl,txtReference
 
 "link url
 syn match txtUrl '\<[A-Za-z0-9_.-]\+@\([A-Za-z0-9_-]\+\.\)\+[A-Za-z]\{2,4}\>\(?[A-Za-z0-9%&=+.,@*_-]\+\)\='
@@ -74,7 +74,8 @@ syn match txtUrl   '\<\(\(https\=\|ftp\|news\|telnet\|gopher\|wais\)://\([A-Za-z
 
 "email text:
 syn match txtEmailMsg '^\s*\(From\|De\|Sent\|To\|Para\|Date\|Data\|Assunto\|Subject\):.*'
-syn match txtEmailQuote '^\(>\($\| \)\)\+'
+"reference from reply email, quotes, etc.
+syn match   txtReference '^[|>:]\(\s*[|>:]\)*'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "类html文本
@@ -85,10 +86,12 @@ syn match txtEmailQuote '^\(>\($\| \)\)\+'
 " color definitions (specific)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "hi txtUrl        term=bold        cterm=bold  ctermfg=blue    gui=underline     guifg=blue
+"hi txtTitle     term=bold       cterm=bold      ctermfg=black   gui=bold        guifg=black
 hi link txtUrl      Underlined"ModeMsg"Tabline"PmenuSbar
 hi link txtTitle      Title"ModeMsg"Tabline"PmenuSbar
 hi link txtList         SignColumn"Pmenu"DiffText"Statement
 hi link txtComment      Special "Comment
+hi link txtReference    DiffAdd "Comment
 hi link txtQuotes       MoreMsg"String
 hi link txtApostrophe    MoreMsg"Special
 hi link txtParentesis   Special "Comment
@@ -96,7 +99,6 @@ hi link txtBrackets  Special
 hi link txtError  ErrorMsg
 hi link txtTodo  Todo
 hi link txtEmailMsg     Structure
-hi link txtEmailQuote   Structure
 
 let b:current_syntax = 'txt'
 " vim:tw=0:et
