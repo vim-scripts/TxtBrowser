@@ -1,115 +1,134 @@
-*txtbrowser*	Plugin for browsing plain text 
+*txtbrowser*    Plugin for browsing plain text 
 
 For Vim version 6.0 and above
 "Author: ypguo<guoyoooping@163.com>
-"Date: 2010/02/19
-"Release version: 1.1.6
+"Date: 2010/06/19
+"Release version: 1.3
 
- 1 Overview                                    		|txt-introduction|
- 2 Installation 					|txt-install|
- 3 features and howto use
-       3.1 syntax hightlight 				|txt-highlight|
-       3.2 Browser the title				|txt-browser-title|
-       3.3 Browser the tables and figures		|txt-browser-table|
-       3.4 Browser the URL in the files			|txt-browser-url|
-       3.5 Lookup the dictionary			|txt-browser-dict|
-       3.6 Search Word	in the internet			|txt-browser-search|
-       3.6 Other features 				|txt-browser-others|
- 4 Element Definition					|txt-element|
-       4.1 Text title					|txt-title|
-       4.2 Text figure					|txt-figure|
-       4.3 Text table					|txt-table|
-       4.4 Text keywords				|txt-keywords|
-       4.5 Text url					|txt-url|
-       4.6 Text email					|txt-email|
-       4.7 Text quotes					|txt-quotes|
-       4.8 Text parentheses				|txt-parentheses|
-       4.9 Text bracket					|txt-bracket|
-       4.10 Text reference                     		|txt-reference|
- 5 License 						|txt-license|
- 6 Fequently Answered questions				|txt-faqs|
-       6.1  Error reported when open Tlist
-       6.2 Issues about Chinese(and others) couldn't or list irrecognizable taglist
-       6.3 Taglist not updated after the file changed.
-       6.4 taglist show every title 2 times.
-       6.5 taglist show title in wrong order:
- 7 todo				 			|txt-todo|
- 8 Changelog						|txt-changlog|
-
-==============================================================================
-1. Overview~ 						*txt-introduction*
-
-The "Plain Text Browser" plugin is a plain text browser plugin for Vim. This
-plugin allows you to efficiently browse through plain text files. The "Plain
-Text Browser" plugin provides the following features:
-
-    * Displays the tags (titles, figures, tables, etc.) defined in a file in a
-      vertically or horizontally split Vim window.
-    * Groups the tags by their type and displays them in a foldable tree.
-    * Hightlight the key elements of a plain text, such elements include:
-      keywords(such TODO, ERROR,etc), URLs, texts in bracket, etc.
-    * When a tag of title or figure name is selected from the taglist window,
-      positions the cursor at the begin of the title or gifure definitions.
-    * The list of tags can be saved and then copied to write the content list.
-    * Automatically highlights the current tag name.
-    * The elemnet of the plain text can be modified easily.
-    * Runs in both console/terminal and GUI versions of Vim
-    * Can be used in both Unix and MS-Windows systems.
-    * Other features in "taglist" plugin.
-
-This file is itself a plain text, and if you have install the "Plain Text
-Browser" plugin alreadly, You might already get the syntax highlight which
-would make key element hightlight and easy to read. Use ":Tlist" command to
-open the text taglist window to have a outline of the fil. Even you have not
-install the "Plain Text Browser" plugin, you can this files in any text editor
-and web browser, but without syntax hightlight and outline.
+ 1 Overview                                            |txt-introduction|
+ 2 Installation                                        |txt-install|
+       2.1 Install
+       2.2 Uninstall
+ 3 features and howto use                              |txt-howto|
+       3.1 syntax hightlight                           |txt-highlight|
+       3.2 Browser the title                           |txt-browser-title|
+       3.3 Browser the tables and figures              |txt-browser-table|
+       3.4 Browser the URL in the files                |txt-browser-url|
+       3.5 Lookup the dictionary                       |txt-browser-dict|
+       3.6 Search Word    in the internet              |txt-browser-search|
+       3.7 Features in develop                         |txt-todo|
+ 4 Options                                             |txt-options|
+       4.1 customize title level                       |txt-title-level|
+       4.2 customize web dictionary                    |txt-dict|
+       4.3 customize the search engine                 |txt-search-engine|
+       4.4 Other options                               |txt-custoize-more|
+ 5 Element Definition                                  |txt-element|
+       5.1 Text title                                  |txt-title|
+       5.2 Text figure                                 |txt-figure|
+       5.3 Text table                                  |txt-table|
+       5.4 Text keywords                               |txt-keywords|
+       5.5 Text url                                    |txt-url|
+       5.6 Text email                                  |txt-email|
+       5.7 Text quotes                                 |txt-quotes|
+       5.8 Text parentheses                            |txt-parentheses|
+       5.9 Text bracket                                |txt-bracket|
+       5.10 Text reference                             |txt-reference|
+ 6 Fequently Answered questions                        |txt-faqs|
+       6.1 Windows Chinese(and others) couldn't or list irrecognizable taglist
+       6.2 Taglist not updated after the file changed.
+       6.3 taglist show every title 2 times.
+       6.4 taglist show title in wrong order:
+ 7 Bug report~                                         |txt-bug|
+ 8 License                                             |txt-license|
+ 9 Changelog                                           |txt-changlog|
 
 ==============================================================================
-2. Installation~ 					*txt-install*
+1. Overview~                         *txt-introduction*
+
+The "TxtBrowser" plugin is a plain text browser plugin for Vim and provides the
+following features to allow you to efficiently browse through plain text
+files(for example RFCs).
+
+1) Title tag list: Show an overview of the structure of plain text and list all
+the titles in the taglist windows, you can jump to them just by clicking. Use
+":Tlist" command to open the taglist and use ":TlistUpdate" to update the
+taglist after modification.
+
+2) Syntax highlight: highlight the key element in your plain text. This include
+the title, URLs, keywords you defined(default is TODO, ERROR, etc), Words in
+bracket, etc. Syntax hightlight would be auto loaded after install. Snapshot of
+feature 1 and 2 are available at:
+
+http://guoyoooping.blog.163.com/album/edit/#m=1&aid=193892890
+
+3) Browser Utilities(|txt-howto|):
+
+<Leader>s: Search word under cursor(or selected) by search engine(google)
+<Leader>f: Find word under cursor(or selected) by web dictionary(www.dict.cn).
+<Leader>g: Goto the URL under cursor(or selected).
+
+Compared to othere scripts which have similar function, TxtBrowser needn't
+modify your document, You could open other people's document(For example the
+RFC documents) and apply this plugin to it and you would get the title tag and
+syntax highlight.
+
+It is expected that TxtBrowser works where vim and ctags works.
+
+==============================================================================
+2. Installation~                     *txt-install*
+
+2.1 Install
 
 1) Please make sure taglist(vimscript #273: taglist.vim) has been installed.
 
-2) Download the txt.zip file and unzip the files to the $HOME/.vim or the
-$HOME/vimfiles or the $VIM/vimfiles directory, Then cut the file ".ctags" to
-your $HOME/ directory. After this step, you should have the following four
-files (the directory structure should be preserved):
+[Note]: Taglist has problem in supporting Chinese(CJK: Chinese, Japanese,
+Korean), So I give a patch to taglist.vim. It is strongly recommended to apply
+that patch or use the taglist.vim I provided. I will not provide the patch
+after taglist fix these bugs.
 
-	* $HOME/.vim/syntax/txt.vim - syntax for text/plain.
-	* $HOME/.vim/plugin/txtbrowser.vim - browser tools.
-	* $HOME/.vim/doc/txtbrowser.txt - help document in English.
-	* $HOME/.vim/doc/txtbrowser.cnx - help document in Chinese. (Open the
-					file and Use ":helptags ." to install)
-	* $HOME/.ctags - language definition of Exuberant Ctags for txt.
+2) Download the txtbrowser.zip file and unzip the files to the $HOME/.vim or
+the $HOME/vimfiles or the $VIM/vimfiles directory. After this step, you should
+have the following five files (the directory structure should be preserved):
 
-Because release before 1.1.1 use the old plugin name, please delete the old
-release at first.(mainly the help documents: txt.txt and txt_cn.txt).
+* $HOME/.vim/syntax/txt.vim - syntax for text/plain.
+* $HOME/.vim/ftplugin/txt.vim - language definition for text/plain.
+* $HOME/.vim/plugin/txtbrowser.vim - browser tools.
+* $HOME/.vim/doc/txtbrowser.txt - help document in English.
+* $HOME/.vim/doc/txtbrowser.cnx - help document in Chinese.
 
+Don't forget to open the file and Use ":helptags ." to install help tag.
 
 3) Add the following line into your .vimrc file and restart your vim.
 
-	syntax on "syntax highlighting on
-	let tlist_txt_settings = 'txt;c:content;f:figures;t:tables'
-	au BufRead,BufNewFile *.txt setlocal ft=txt
+syntax on "syntax highlighting on
+filetype plugin on
+au BufRead,BufNewFile *.txt setlocal ft=txt 
 
-"TxtBorwser" collaborate well with almost all the plugins(NERD_Tree, txtfmt,
-etc), If you want to combine this plugin with other text plugin(take vimscript
-#2208: txtfmt as example), You could simply added the following 2 autocommands
-to your .vimrc after the line `setlocal ft=txt' as described above:
+[Note]Since the plugin name changed after release 1.1.1, If you update version
+before 1.1.1, please uninstall the old version at first.
 
-	au BufRead,BufNewFile *.txt runtime ftplugin/txtfmt.vim
-	au BufRead,BufNewFile *.txt runtime syntax/txtfmt.vim 
+[Note]Since the infrastructure changed for easy instal, If you update version
+before 1.2.1, please delete the old .ctags file at first.
 
-To uninstall the taglist plugin, remove the plugin/taglist.vim and
-doc/taglist.txt files from the $HOME/.vim or $HOME/vimfiles directory.
+[Note]"TxtBorwser" collaborate well with other plugins, take vimscript #2208:
+txtfmt as example, You could simply added the following 2 autocommands to your
+.vimrc after the line `setlocal ft=txt' as described above:
+
+    au BufRead,BufNewFile *.txt runtime ftplugin/txtfmt.vim
+    au BufRead,BufNewFile *.txt runtime syntax/txtfmt.vim 
+
+2.2 Uninstall
+
+To uninstall the taglist plugin, remove the files listed above directly.
 
 ==============================================================================
-3. features and howto use
+3. features and howto use                                   *txt-howto*
 
 After the install and preview, you must have a perceptual concept about the
 "TxtBrowser" plugin. I will intruduce the detail about how to use these
 features in this chapter.
 
-3.1 syntax hightlight					*txt-highlight*
+3.1 syntax hightlight                    *txt-highlight*
 
 The feature of syntax hightlight make you document highlight the key part,
 which include the title, keywords, list, etc. This features is loaded
@@ -126,9 +145,9 @@ above setting. But it seems that it is a common file type I need to view, so I
 add the following line to my .vimrc file to automatically add the syntax
 hightlight:
 
-	au BufRead,BufNewFile *.log setlocal ft=txt
+    au BufRead,BufNewFile *.log setlocal ft=txt
 
-3.2 Browser the title				 *txt-browser-title*
+3.2 Browser the title                            *txt-browser-title*
 
 If your are a programmer, you must have used the "taglist" plugin to browser
 your code. Think about use the same method to browser plain text files. The
@@ -152,29 +171,96 @@ see Chapter4 "Element Definition" for details of how these are defined.
 
 In the meantime, it's highly recommended to use the formal title format.
 
-3.3 Browser the tables and figures			*txt-browser-table*
+3.3 Browser the tables and figures                     *txt-browser-table*
 
 Some documents have a plenty of tables and figures. It might difficult to
 locate them. But with "TxtBrowser" plugin you could rapidly locate them just by
 clicking the tag. The method of use is the same as Chapter 3.2 "Browser the
 title".
 
-3.4 Browser the URL in the files			*txt-browser-url*
+3.4 Browser the URL in the files                        *txt-browser-url*
 
 Sometimes we want browser the url in the files. Do you need to open a web
 browser and type the address? It's not required. After release 1.1.1, just
-putting the cursor to the url and use command ":TxtBrowserUrl" to open the url.
+putting the cursor to the url and use command ":TGoto" to open the url.
 Alternatively you could use map "<Leader>g" to open the url. Here is <Leader>
 is the key of your "mapleader" value. If you didn't define that value, it is
 "\" key in the keyboard. That means, you type the "\" and "g" would open your
 url.
 
-3.5 Lookup the dictionary				*txt-browser-dict*
+In fact, The URL include not only the http link, but also the file:// and
+mailto:// ect. For example the following URLs are supported:
 
-Sometimes you might need to lookup the dictionary. "TxtBrowser" provide a means
-to lookup the words in dictionary web page. How to use? Just put your cursor to
-the word and use command ":TxtBrowserWord". Alternatively you could use map
-"<Leader>f". 
+	http://guoyoooping.blog.163.com
+	www.vim.org
+	mailto:guoyoooping@sohu.com
+	guoyoooping@sohu.com
+	file:///media/data/audio/casablanca.mp3
+	C:\Documents and Settings\ypguo\Desktop\tmp\sample.JPG
+	../audio/Childhood.Memory.ape
+	ftp://10.208.16.10
+
+Put your cursor on it(or select it) and use <Leader>g to play it by your
+favorite player. It's the same as about other file type such as .jpg, .pdf,
+etc.
+
+3.5 Lookup the dictionary                               *txt-browser-dict*
+
+Sometimes you might need to lookup the dictionary. "TxtBrowser" provide a
+means to lookup the words in dictionary web page. How to use? Just put your
+cursor to the word or select the word you want to lookup, and then use command
+":TFind". Alternatively you could use map "<Leader>f". 
+
+I set the google English/Chinese dictionary to the defaut dictionayr web page.
+It's easy to set your own prefered dictionary(|txt-dict|). 
+
+3.6 Search Word in the internet                          *txt-browser-search*
+
+Sometimes you might search a hot word in your document by some search engine,
+such as Google. "TxtBrowser" provide a new feature to open the search result
+just by a command ":TSearch" or the following map:
+
+    <Leader>s
+
+The defaut search engine is www.google.com, You can custimize you prefered
+search engine(|txt-browser-search|).
+
+3.7 Features in develop                                           *txt-todo*
+
+New features are in develop. Please Pay attention to it:
+
+* Hightlight the text under the cursor or selected(multi line).
+* Search the text selected(multi line).
+* The title tag support fold.
+* Support Chinese number to difine a title.
+* some rich text format support.
+
+3.7 Other features                *txt-browser-others*
+
+New features(for example offline words lookup, selected word lookup, etc) are
+to be released in the following release. Please Pay attention to it:
+
+    http://www.vim.org/scripts/script.php?script_id=2899
+
+You are welcome to report bugs and raise your suggestion and supply means to
+implement those features. Thank you very much.
+
+==============================================================================
+4. Options                                                *txt-options*    
+
+You could customize what you prefer to.
+
+4.1 customize title level                                *txt-title-level*    
+
+In common cases, it is enough for title to have 3 levels. But occasionally if
+the document is too long and has too much titles, it may be a little difficult
+to locate what you want to go. In other cases, you might want verbose title to
+locate. You could add the following line to your .vimrc to customize the title
+level(defaut is 3 levels).
+
+let TxtBrowser_Title_Level = 2
+
+4.2 customize web dictionary                              *txt-dict*
 
 I set the google English/Chinese dictionary to the defaut dictionayr web page.
 It's easy to set your own prefered dictionary. Open your prefered dictionary
@@ -183,17 +269,9 @@ change any chars) to the following variable in your .vimrc, For example, the
 url we got when looking up the word "text" is "http://dict.cn/text", I set my
 prefered dictionay page as below in my .vimrc file:
 
-|In my ".vimrc"
-|
-|let TxtBrowser_Dict_Url='http://dict.cn/text'
+let TxtBrowser_Dict_Url='http://dict.cn/text'
 
-3.6 Search Word	in the internet				*txt-browser-search*
-
-Sometimes you might search a hot word in your document by some search engine,
-such as Google. "TxtBrowser" provide a new feature to open the search result
-just by a command ":TxtBrowserSearch" or the following map:
-
-	<Leader>s
+4.3 customize the search engine                          *txt-search-engine*
 
 The defaut search engine is www.google.com(It's google Chinese, Different
 country and diffrent district may differ from each other), You can custimize
@@ -203,25 +281,19 @@ search a word "text", for exampe we get the link:
 "http://www.baidu.com/s?wd=text&oq=text&f=3&rsp=2",I set my prefered search
 engine as below in my .vimrc file:
 
-In my ".vimrc"
-|
-|let Txtbrowser_Search_Engine='http://www.baidu.com/s?wd=text&oq=text&f=3&rsp=2'
+let Txtbrowser_Search_Engine='http://www.baidu.com/s?wd=text&oq=text&f=3&rsp=2'
 
-3.7 Other features				*txt-browser-others*
+4.4 Other options                                         *txt-custoize-more*
 
-New features(for example offline words lookup, selected word lookup, etc) are
-to be released in the following release. Please Pay attention to it:
-
-	http://www.vim.org/scripts/script.php?script_id=2899
-
-You are welcome to report bugs and raise your suggestion and supply means to
-implement those features. Thank you very much.
+There are many options to add, such the format of the title, keywords, etc. I'm
+busy now, but I will add then little by little. Please contact me if you have
+any suggestion.
 
 ==============================================================================
-4. Element Definition                              		*txt-element*
+5. Element Definition                                      *txt-element*
 
 ------------------------------------------------------------------------------
-4.1 Text title                                  		*txt-title*
+5.1 Text title                                          *txt-title*
 
 We recognize the title according to the serial numbers. For example: 1，1.1，
 1.1.1, Please note that the numbers should at the begin of the line and there
@@ -263,7 +335,7 @@ syn match txtTitle "^\d\s\+.\+\s*[^,。，]$"
 The element are used as both file structure and syntax highlight.
 
 ------------------------------------------------------------------------------
-4.2 Text figure                                  		*txt-figure*
+5.2 Text figure                                          *txt-figure*
 
 Lines start with any number of space and then the keyword "figure" and then num
 is figure, for example, You should find the figure tag in the vim taglist
@@ -293,7 +365,7 @@ is defined as Text figure and will be list in your vim taglist window:
 The element are used as file structure.
 
 ------------------------------------------------------------------------------
-4.3 Text table                                  		*txt-table*
+5.3 Text table                                          *txt-table*
 
 text start with \t or space and then the keyword "table" and then num is
 table, for example, You should find the table tag in the vim taglist window.
@@ -320,7 +392,7 @@ window:
 The element are used as file structure.
 
 ------------------------------------------------------------------------------
-4.3 Text keywords                                  		*txt-keywords*
+5.3 Text keywords                                          *txt-keywords*
 
 The following words are defined as keywords. You can Add your own keywords in
 the following lines in the file txt.vim.
@@ -331,7 +403,7 @@ syn keyword txtError error bug caution dropped
 The element are used as systax highlight.
 
 ------------------------------------------------------------------------------
-4.4 Text url                                  		*txt-url*
+5.4 Text url                                          *txt-url*
 
 The url and uri is defined as text url. Please refer to rfc1738(Uniform
 Resource Locators (URL)) and rfc3986(Uniform Resource Identifier (URI):
@@ -339,14 +411,14 @@ Generic Syntax) for url's and uri's definitions.
 
 For example:
 
-	guoyoooping@163.com
-	www.pmtv.wordpress.com
-	ftp://192.168.1.5/ftpboot/username/example.txt
+    guoyoooping@163.com
+    www.pmtv.wordpress.com
+    ftp://192.168.1.5/ftpboot/username/example.txt
 
 The element are used as systax highlight.
 
 ------------------------------------------------------------------------------
-4.5 Text email                                  		*txt-email*
+5.5 Text email                                          *txt-email*
 
 Keywords that in email are defined as text email:
 
@@ -356,15 +428,15 @@ syn match txtEmailQuote '^\(>\($\| \)\)\+'
 
 For example, Please note these keyword From, Sent, To and Subject:
 
-	From: San Zhang(R&D Center Beijing) 
-	Sent: 2008年11月27日 13:17
-	To: Si Li, Wu Wang, Liu Chen
-	Subject: RE: 你们都不踢球?
+    From: San Zhang(R&D Center Beijing) 
+    Sent: 2008年11月27日 13:17
+    To: Si Li, Wu Wang, Liu Chen
+    Subject: RE: 你们都不踢球?
 
 The element are used as systax highlight.
 
 ------------------------------------------------------------------------------
-4.6 Text quotes                                  		*txt-quotes*
+5.6 Text quotes                                          *txt-quotes*
 
 Words in single quotation marks and double quotation marks are defined as text
 quotes. The following is the definition, you could modify them to fit your own
@@ -376,12 +448,12 @@ syn match   txtQuotes     '["“][^"”]\+\(\n\)\=[^"”]*["”]'hs=s+1,he=e-1
 
 For examples:
 
-	"good example"
+    "good example"
 
 The element are used as systax highlight.
 
 ------------------------------------------------------------------------------
-4.7 Text parentheses                                 	*txt-parentheses*
+5.7 Text parentheses                                     *txt-parentheses*
 
 Words in parentheses are defined as text parentheses.
 
@@ -391,12 +463,12 @@ syn match   txtParentesis "[(（][^)）]\+\(\n\)\=[^)）]*[)）]" contains=txtUr
 
 For examples:
 
-	(good example)
+    (good example)
 
 The element are used as systax highlight.
 
 ------------------------------------------------------------------------------
-4.8 Text bracket                                  		*txt-bracket*
+5.8 Text bracket                                          *txt-bracket*
 
 Words in bracket marks defined as text bracket.
 
@@ -404,18 +476,16 @@ Definition is list as the following, you could modify to fit your need:
 
 syn match txtBrackets     '<[^<]\+\(\n\)\=[^<]*>'hs=s+1,he=e-1 contains=txtUrl
 syn match txtBrackets     '\[[^\[]\+\(\n\)\=[^\[]*\]'hs=s+1,he=e-1 contains=txtUrl
-syn region txtBrackets    matchgroup=txtOperator start="{"        end="}" contains=txtUrl
 
 For examples:
 
-	<good example>
-	[good example]
-	{good example}
+    <good example>
+    [good example]
 
 The element are used as systax highlight.
 
 ------------------------------------------------------------------------------
-4.9 Text list                                  		*txt-list*
+5.9 Text list                                          *txt-list*
 
 Lines that start with some spaces and then the symbol "*"(or the symbol "-" or
 the digit and then the symbol ")") and text.
@@ -439,7 +509,7 @@ For examples:
 The element is used as systax highlight.
 
 ------------------------------------------------------------------------------
-4.10 Text reference                                  		*txt-reference*
+5.10 Text reference                                          *txt-reference*
 
 In case you want refer to other people's document or the replied email, You
 might highlight what you refer to, The following syntax element could highlight
@@ -480,39 +550,9 @@ I'll check out how to configure my mailer with Google Groups for this list.
 The element is used as systax highlight.
 
 ==============================================================================
-5. License~ 						*txt-license*
+6. Fequently Answered questions~                 *txt-faqs*
 
-Permission is hereby granted to use and distribute the "Plain Text Browser"
-plugin, with or without modifications, provided that this copyright notice is
-copied with it. Like anything else that's free, "Plain Text Browser"
-plugin.vim is provided *as is* and comes with no warranty of any kind, either
-expressed or implied. In no event will the copyright holder be liable for any
-damamges resulting from the use of this software.
-
-==============================================================================
-6. Fequently Answered questions~				 *txt-faqs*
-
-6.1 Error reported when open Tlist
-
-Question: Unknown language "txt" in "language-force" option, This is the error
-info:
-
-    Taglist: Failed to generate tags for d:\BAK\aaa.txt
-    ^@d:\BAK>d:\Tools\Editors\gVim\Utility\ctags\ctags.exe -f - --format=2
-    --excmd=pattern --fields=nks --sort=yes --language-force=txt
-    --txt-types=cft "d:\BAK\aaa.txt" ^@ctags.exe: Unknown language "txt" in
-    "language-force" option 
-
-Answered:
-
-It seemed that you put the file .ctags to a wrong location. The .ctags should
-be on $HOME directory. It is easy to find your $HOME directory on Linux, but it
-may be confusing to those using Windows. Generally, your $HOME directory should
-be "C:\Documents and Settings\abcd" if you login name is "abcd". Open
-"Start-Run-Cmd" and use "cd " (with no parameters) command to goto your $HOME
-directory. 
-
-6.2 Issues about Chinese(and others) couldn't or list irrecognizable taglist
+6.1 Windows Chinese(and others) couldn't or list irrecognizable taglist
 
 Question1: On Windows, If the filename or directory name has CJK(Chinese tested
 only) chars, the taglist couldn't be shown.
@@ -523,24 +563,28 @@ Answer: This is issue from taglist.vim which doesn't consider the transform
 between differenc enc. You could patch the following diff to solve this
 problem, If you don't be familiar with the didf and patch, you could download
 the modified taglist.vim(based on taglist.vim v4.5) and replace the old one.
-After the modify, you needn't change the fenc of every installed files any
-longer.
 
-	http://att.newsmth.net/att.php?p.731.54628.3814.vim
-
-If you are using languages other than cp936, replace the following "cp936" with
-your encoding(for example cp950).
+	http://att.newsmth.net/att.php?p.731.55149.1226.vim
 
 taglist.diff(usage: patch taglist.vim taglist.diff)
-|
 |Index: taglist.vim
 |===================================================================
 |RCS file: /cygdrive/d/cvsroot/docu/script/vim/taglist/taglist.vim,v
-|retrieving revision 1.1
-|diff -u -p -r1.1 taglist.vim
-|--- taglist.vim	13 Mar 2009 04:16:54 -0000	1.1
-|+++ taglist.vim	23 Feb 2010 15:27:37 -0000
-|@@ -2177,6 +2177,13 @@ function! s:Tlist_Parse_Tagline(tag_line
+|retrieving revision 1.1.1.1
+|diff -u -p -r1.1.1.1 taglist.vim
+|--- taglist.vim	13 Mar 2009 04:16:54 -0000	1.1.1.1
+|+++ taglist.vim	24 Mar 2010 14:27:57 -0000
+|@@ -103,6 +103,9 @@ if !exists('loaded_taglist')
+|         endif
+|     endif
+| 
+|+    " Taglist doesn't work with multibyte language because of encoding
+|+    " issue. ypguo fix it and mark it. The fix start with ypguo
+|+    let Tlist_Enc_Patch = 1
+| 
+|     " Automatically open the taglist window on Vim startup
+|     if !exists('Tlist_Auto_Open')
+|@@ -2177,6 +2180,13 @@ function! s:Tlist_Parse_Tagline(tag_line
 |     " Extract the tag name
 |     let tag_name = strpart(a:tag_line, 0, stridx(a:tag_line, "\t"))
 | 
@@ -554,7 +598,7 @@ taglist.diff(usage: patch taglist.vim taglist.diff)
 |     " Extract the tag scope/prototype
 |     if g:Tlist_Display_Prototype
 |         let ttxt = '    ' . s:Tlist_Get_Tag_Prototype(s:fidx, s:tidx)
-|@@ -2264,8 +2271,9 @@ function! s:Tlist_Process_File(filename,
+|@@ -2264,8 +2274,9 @@ function! s:Tlist_Process_File(filename,
 |         set noshellslash
 |     endif
 | 
@@ -566,20 +610,28 @@ taglist.diff(usage: patch taglist.vim taglist.diff)
 |         " Windows does not correctly deal with commands that have more than 1
 |         " set of double quotes.  It will strip them all resulting in:
 |         " 'C:\Program' is not recognized as an internal or external command
-|@@ -2285,6 +2293,12 @@ function! s:Tlist_Process_File(filename,
+|@@ -2285,6 +2296,20 @@ function! s:Tlist_Process_File(filename,
 | 
 |     call s:Tlist_Log_Msg('Cmd: ' . ctags_cmd)
 | 
-|+    "ypguo add: win32 cmd(shell) need 'cp936' characters, so convert it before
-|+    "pass the parameters.
-|+    if has('win32') && !has('win32unix') && (&enc != 'cp936')
-|+	    let ctags_cmd = iconv(ctags_cmd, &enc, "cp936")
+|+    "ypguo add: win32 cmd(shell) need 'cpxxx' characters, so convert it before
+|+    "pass the parameters, if chcp doesn't work, please set it maually.
+|+    if executable("chcp")
+|+	    let code_page = 'cp' . matchstr(system("chcp"), "\\d\\+")
+|+	    call s:Tlist_Log_Msg('code_page: ' . code_page)
+|+    else
+|+	    " If chcp doesn't work, set its value manually here.
+|+	    let code_page = 'cp936'
+|+    endif
+|+
+|+    if has('win32') && !has('win32unix') && (&enc != code_page)
+|+	    let ctags_cmd = iconv(ctags_cmd, &enc, code_page)
 |+    endif
 |+
 |     " Run ctags and get the tag list
 |     let cmd_output = system(ctags_cmd)
 | 
-|@@ -3338,6 +3352,12 @@ function! s:Tlist_Window_Jump_To_Tag(win
+|@@ -3338,6 +3363,12 @@ function! s:Tlist_Window_Jump_To_Tag(win
 |     if tidx != 0
 |         let tagpat = s:Tlist_Get_Tag_SearchPat(fidx, tidx)
 | 
@@ -593,113 +645,91 @@ taglist.diff(usage: patch taglist.vim taglist.diff)
 |         call s:Tlist_Window_Highlight_Line()
 |     else
 
-6.3 Taglist not updated after the file changed.
+6.2 Taglist not updated after the file changed.
 
 Question: When I change my file, The taglist is not updated.
 
 Answer: You should call ":TlistUpdate" command manually to update your taglist
 after you change you file. It is recommended to map this command as below:
 
-	nmap <silent> <F5> <ESC>:TlistUpdate<RETURN>
+    nmap <silent> <F5> <ESC>:TlistUpdate<RETURN>
 
-6.4 taglist show every title 2 times.
+6.3 taglist show every title 2 times.
 
 问: The taglist list my title 2 times as below, why?
 
-	1. xxxxxxxx
-	1. xxxxxxxx
-	2. cccccccc
-	2. cccccccc
-	...
-	...
+    1. xxxxxxxx
+    1. xxxxxxxx
+    2. cccccccc
+    2. cccccccc
+    ...
+    ...
 
 Answer: You should have another .ctags file in your ./ directory. ctags read
 every congiguration in the following position and it will read twice if there
 are duplicate configuration in the following locations, Please delete the other
 configuration file.
 
-	/ctags.cnf (on MSDOS, MSWindows only)
-	/etc/ctags.conf
-	/usr/local/etc/ctags.conf
-	$HOME/.ctags
-	$HOME/ctags.cnf (on MSDOS, MSWindows only)
-	.ctags
-	ctags.cnf (on MSDOS, MSWindows only)
+    /ctags.cnf (on MSDOS, MSWindows only)
+    /etc/ctags.conf
+    /usr/local/etc/ctags.conf
+    $HOME/.ctags
+    $HOME/ctags.cnf (on MSDOS, MSWindows only)
+    .ctags
+    ctags.cnf (on MSDOS, MSWindows only)
 
-6.5 taglist show title in wrong order:
+6.4 taglist show title in wrong order:
 
 Question: When I open the taglist, there are something like title, but it is
 confusing:
 
-	txtbrowser_cnx.txt (D:\release\1.1.6\doc)
-	  content
-	    .       1000001.1.1 标题1.1.1
-	    .   1000001.1 标题1.1
-	    .   2.1 安装插件
-	    .   2.2 卸载
-	    .   2.3 可能会遇到的问题
-	    .   2.4 安装可选项
-	    .   3.1 语法高亮功能
+    txtbrowser_cnx.txt (D:\release\1.1.6\doc)
+      content
+        .       1000001.1.1 标题1.1.1
+        .   1000001.1 标题1.1
+        .   2.1 安装插件
+        .   2.2 卸载
+        .   2.3 可能会遇到的问题
+        .   2.4 安装可选项
+        .   3.1 语法高亮功能
 
 Answer: The title are shown correctly but the order is wrong, put the curser to
 the taglist window and use 's' command to reorder it by alphabetical  order.
 You mush have the following configuration in your .vimrc:
 
-	let Tlist_Sort_Type = "name"
+    let Tlist_Sort_Type = "name"
 
 Please delete the above or change it as following:
 
-	au BufRead,BufNewFile *.txt let Tlist_Sort_Type = "order"
+    au BufRead,BufNewFile *.txt let Tlist_Sort_Type = "order"
 
 ==============================================================================
-7. todo~					 		*txt-todo*
+7. Bug report~                                                 *txt-bug*
 
-1) support chinese number format title, 如: 一、这是一个标题.
+It's welcome to report bug to me and it's a very import way to improve
+Txtbrowser, you could report bug to:
 
-2) Chinese figure and table improve.
-
-3) Thinks about the title of txt2tags.
+	guoyoooping@163.com
+	http://guoyoooping.blog.163.com
+	http://old.nabble.com/Vim---General-f883.html
 
 ==============================================================================
+8. License~                         *txt-license*
 
-8. Changelog~					 		*txt-changlog*
+GPL.
 
-2010-01-30 1.1.2
-	1) New feature: Search the web for Words under the cursor by search
-	engine.
-	2) Bug fix: fix some bug about url parse error. 
-2010-01-24 1.1.1
-	New features added:
-	1) Browser the URL directly in Vim.
-	2) Lookup the word in web(could be custimzed) directly in Vim.
-	3) Change the plugin name to "txtbrowser" to fit its meaning(So please
-	remove the old help files(txt.txt, txt_cn.txt) firstly, or "helptags ."
-	would complain warning).
-2010-01-23 1.1
-	Same as release 1.0.6(minor change.) Version upgrate to 1.1.x for new
-	features release. Changes since version 1.0:
-	1) Delete some personal configuration in txt.vim.
-	2) Add the help document in both English and Chinese. 
-2010-01-16  1.0.6
-	1) Add the Chinese help document. You can install or don't install it.
-2010-01-10  1.0.5
-	1) Delete all the personal setting in txt.vim, such as "hi clear
-	Normal", "set bg&", users should set their own prefer setting.
-	2) Change the definition of the figure in .ctags. Being compatible
-	with tables without name. such as expression like "figure 1".
-	3) Change the filetype of the txt.txt to "txt", Opening the txt.txt
-	with vim directly could have a preview of this plugin. 
-2010-01-03  1.0.4
-	Update the help document. Give the definition of every element and
-	examples.
-2010-01-01 1.0.3
-	Add the help document.
-2009-12-29 1.0.2
-	1) delete some the personal configuration in txt.vim, it might not be
-	fit for all.
-	2) Add an example file to illustrate.
+==============================================================================
+9. Changelog~                             *txt-changlog*
+
 2009-12-26 1.0
-	Initial upload
+        1)Initial upload
+2010-01-23 1.1
+	1) Delete some personal configuration in txt.vim.
+	2) Add the help document in both English and Chinese.
+2010-03-06 1.2
+	1)Plugin name changed from "txt.zip" to "TxtBrowser"
+	2)Add utilities to browser url in vim.
+	3)bug fix for Chinese title couldn't listed.
 
 ==============================================================================
-
+vim:tw=78:ts=8:noet:ft=txt:

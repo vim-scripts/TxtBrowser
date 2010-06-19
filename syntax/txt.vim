@@ -1,7 +1,7 @@
 "Script_name: txt.vim
 "Author: guoyoooping@163.com
-"Date: 2010/02/19
-"Release: 1.0.6
+"Date: 2010/06/19
+"Release: 1.3
 "Description: syntax for plain/text.
 "Language: text/plain :)
 "Location: $HOME/.vim/syntax or $VIMRUNTIME/syntax/
@@ -9,10 +9,14 @@
         "1. put this file in $HOME/.vim/syntax or $VIMRUNTIME/syntax/ 
         "2. Add the following line in your .vimrc:
         "syntax on "syntax highlighting on
-        "let tlist_txt_settings = 'txt;c:content;f:figures;t:tables' "language definition for plain text
+        "filetype plugin on
         "au BufRead,BufNewFile *.txt setlocal ft=txt "syntax highlight for txt.vim 
 
-syn case ignore "set case insensitive.
+"set case insensitive.
+syn case ignore
+
+"This script is encoded as utf8, and will convert to appropriate value when running.
+scriptencoding utf-8
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key words definition.
@@ -51,8 +55,8 @@ syn match txtList    '^\s*(\=\([0-9]\+\|[a-zA-Z]\))'
 syn match txtList "^\s\+\d\+\.\d\@!"
 
 "txtApostrophe: text in the apostrophe
-"单引号内文字
-syn match   txtApostrophe  '\'[^\']\+\''hs=s+1,he=e-1 contains=txtUrl,txtReference
+"单引号内文字, 作用范围最多两行.
+syn match   txtApostrophe  '\(\n\|[^a-zA-Z]\)\'[^\']\+\(\n\)\=[^\']\+\'\(\n\|[^a-zA-Z]\)'hs=s+1,he=e-1 contains=txtUrl,txtReference
 
 "txtQuotes: text in the quotoes
 "双引号内文字, 包括全角半角, 作用范围最多两行

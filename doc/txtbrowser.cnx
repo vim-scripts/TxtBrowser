@@ -1,159 +1,139 @@
-*txtbrowser*	"纯文本浏览器": 浏览纯文本的插件 
+*txtbrowser*        "纯文本浏览器": 浏览纯文本的插件 
 
 适用Vim版本: 6.0 and above
 "Author: ypguo<guoyoooping@163.com>
-"Date: 2010/02/19
-"Release version: 1.1.6
+"Date: 2010/06/19
+"Release version: 1.3
 
- 1 简介~                                    		|txt-introduction|
- 2 安装指南~ 						|txt-install|
+ 1 简介~                                                 |txt-introduction|
+ 2 安装指南~                                             |txt-install|
        2.1 安装插件
        2.2 卸载
-       2.3 可能会遇到的问题
-       2.4 安装可选项
- 3 功能和使用说明~
-       3.1 语法高亮功能 				|txt-highlight|
-       3.2 浏览文档的标题				|txt-browser-title|
-       3.3 浏览文档的图列表和表列表 			|txt-browser-table|
-       3.4 浏览文档中的URL 				|txt-browser-url|
-       3.5 在文档中查字典 				|txt-browser-dict|
-       3.6 在文档中调用搜索引擎搜索			|txt-browser-search|
-       3.7 其它浏览功能 				|txt-browser-others|
- 4 语法元素的定义和说明					|txt-element|
-       4.1 文本标题					|txt-title|
-       4.2 文本图					|txt-figure|
-       4.3 文本表					|txt-table|
-       4.4 文本关键字					|txt-keywords|
-       4.5 文本超键接					|txt-url|
-       4.6 文本Email的关键词				|txt-email|
-       4.7 文本引号内文字 				|txt-quotes|
-       4.9 文本括号内文字				|txt-bracket|
-       4.9 文本列举					|txt-list|
-       4.10 文本引用                     		|txt-reference|
- 5 版权 						|txt-license|
- 6 常见的问题						|txt-faqs|
-       6.1 在Tlist时报错: Unknown language "txt" in "language-force" option
-       6.2 有关中文(或其它宽字节语言)的taglist不能显示或乱码的问题
-       6.3 文档更新后taglist好像无法及时更新.
-       6.4 taglist窗口里标题被显示多次
-       6.5 taglist窗口标题不能正常显示:
- 7 下一步计划						|txt-todo|
- 8 发行记录~					 	|txt-changelog|
+ 3 功能和使用说明                                        |txt-howto|
+       3.1 语法高亮功能                                  |txt-highlight|
+       3.2 浏览文档的标题                                |txt-browser-title|
+       3.3 浏览文档的图列表和表列表                      |txt-browser-table|
+       3.4 浏览文档中的URL                               |txt-browser-url|
+       3.5 在文档中查字典                                |txt-browser-dict|
+       3.6 在文档中调用搜索引擎搜索                      |txt-browser-search|
+       3.7 开发中的功能                                  |txt-todo|
+ 4 偏好定制                                              |txt-options|
+       4.1 标题级数                                      |txt-title-level|
+       4.2 定制自己的字典                                |txt-title-level|
+       4.3 定制自己的搜索引擎                            |txt-search-engine|
+       4.4 更多的定制功能                                |txt-custoize-more|
+ 4 语法元素的定义和说明                                  |txt-element|
+       5.1 文本标题                                      |txt-title|
+       5.2 文本图                                        |txt-figure|
+       5.3 文本表                                        |txt-table|
+       5.4 文本关键字                                    |txt-keywords|
+       5.5 文本超键接                                    |txt-url|
+       5.6 文本Email的关键词                             |txt-email|
+       5.7 文本引号内文字                                |txt-quotes|
+       5.9 文本括号内文字                                |txt-bracket|
+       5.9 文本列举                                      |txt-list|
+       5.10 文本引用                                     |txt-reference|
+ 6 常见的问题                                            |txt-faqs|
+       6.1 有关Windows下中文文件名(或其它宽字节语言)的taglist不能显示的问题
+       6.2 文档更新后taglist好像无法及时更新.
+       6.3 taglist窗口里标题被显示多次
+       6.4 taglist窗口标题不能正常显示:
+ 7 问题反馈~                                             |txt-bug|
+ 8 版权                                                  |txt-license|
+ 9 发行记录~                                             |txt-changelog|
 
 ==============================================================================
-1. 简介~						*txt-introduction*
+1. 简介~                                                *txt-introduction*
 
-"纯文本浏览器"是为Vim写的一个方便阅读和浏览纯文本的插件. 该插件使你的纯文本也有
-语法高亮, 方便阅读; 同时它可以自动生成文档的目录树, 点击就可实现跳转, 方便浏览.
-它具有以下特点: 
+"纯文本浏览器"是一个vim文本浏览插件, 借助它你可以实现高效地浏览你的纯文本文件:
 
-	* 自动在taglist窗口显示目录树, 图列表, 表列表. 点击即可跳转到正文定义处.
-	* 在taglist窗口自动高亮当前所在的章节.
-	* 高亮纯文本文件的关键元素(关键字, 超级链接, 括号内文字等).
-	* 用于实现上述功能只需要安装插件, 不像别的插件那样需要在文档里做任何特
-	殊标记, 兼容性强. 例如任一个rfc文档打开即可实现目录树和语法高亮.
-	* 拷贝taglist窗口里的目录到正文里, 即可以做为正文的目录.
-	* 用于语法高亮的文本元素可以随意定制, 真正实现个性化.
-	* 无需要修改, 同时支持gvim和控制台, 同时支持Unix和Windows操作系统.
-	* 支持在
+1) 为文本文件生成标题标签: 用Vim打开纯文本文件, 执行":Tlist"命令即可生成纯文本
+文件的目录树, 点击标签就可实现跳转到正文, 就像在使用 taglist浏览C代码一样. 方
+便你的浏览. 修改内容后用命令 ":TlistUpdate"即可完成刷新. 建议使用映射以提高效
+率:
 
-目的是为了介绍"纯文本浏览器"的各种语法的定义. 本文是以纯文本写成的, 因此你可以
-把本文作为一个演示语法高亮和浏览目录树的例子, 如果你已经安装了"纯文本浏览器"插
-件, 本文将具有语法高亮, 并且可以在taglist窗口显示本文的目录结构, 点击目录就可以
-实现跳转. 如果你还没有安装"纯文本浏览器"(安装请参考第3节: 安装指南), 那本文就是
-一个普通的文本文件, 你可以用任何编辑器打开它, 除了为Vim帮助文档做的标记外(因为
-本文将作为帮助文档随你的插件一起安装), 你不会看到像其它插件为了实现跳转而加的奇
-怪的标记.
+	nmap <silent> <F8> <ESC>:Tlist<RETURN>)
+	noremap <silent> <F5> <ESC>:TlistUpdate<RETURN>
+
+2) 语法高亮: 如果你经常从事文字工作, 想必认为纯文本是"黑白"的吧. "纯文本浏览"
+插件为你的文档加上语法高亮, 使关键的部分有颜色, 突出显示标题, 关键字, 列举项, 
+我想一定会增加你的浏览效率. 语法高亮的加载是自动完成的, 也就是说你只要打开扩展
+名为.txt 的文件 , "纯文本浏览插件"就会为你的文档加上语法高亮. 用":colorscheme
+colorname"命令多试几种颜色方案吧, 也许你会发现原来纯文本也如此丰富多彩.
+
+3) 浏览功能
+
+<Leader>s: 用搜索引擎(可定制, 默认为google)搜索光标下的单词或选中的文本.
+<Leader>f: 用网络字典(可定制, 默认为google.cn)对光标下的单词或选中的文本查字典.
+<Leader>g: 打开光标下或选中的URL.
+
+本插件启动后语法高亮和标题标签打开的效果图: 
+
+	http://guoyoooping.blog.163.com/album/edit/#m=1&aid=193892890
+
+本插件自己生成标题, 图, 表标签, 但是相比其它类似功能的插件, 不需要在文档里做任
+何特殊标记, 兼容性强. 例如任一个rfc文档打开即可实现目录树和语法高亮. 拷贝
+taglist窗口里的目录到正文里, 即可以做为正文的目录. 用于语法高亮的文本元素可以
+随意定制, 真正实现个性化. 无需要修改.
+
+本插件同时支持gvim和控制台 , 同时所有的操作系统, 当然前提是ctags能工作.
 
 ==============================================================================
-2. 安装指南~ 						*txt-install*
+2. 安装指南~                                                 *txt-install*
 
 2.1 安装插件
 
-1)请首先安装taglist插件 (http://www.vim.org/scripts/script.php?script_id=273), 
-我相信玩Vim的没有几个人没有安装这个插件吧.
+1)请首先安装taglist插件 (http://www.vim.org/scripts/script.php?script_id=273).
 
-2)下载插件后解压缩到目录$HOME/.vim(或$HOME/vimfiles, $VIM/vimfiles). 然后将解压后
-的.ctag, 剪切到$HOME目录下即可, 安装完成后你的文件夹下应该有下面的几个文件(请
-注意目录结构):
+[注意]: 由于taglist插件对中文(其实还包括CJK, 即中, 日, 韩等其它语言)支持不太好
+, 因此强烈建议中文用户(CJK)打上作者提供的patch: taglist.diff, 或者使用作者提供
+的修正版的 taglist.vim. 这个下载将在taglist.vim的作者修正这些问题后将删掉.
 
+2. 下载插件后解压缩到目录$HOME/.vim(或$HOME/vimfiles, $VIM/vimfiles)即可, 安装
+完成后你的文件夹下应该有下面的几个文件(请注意目录结构):
+
+	* $HOME/.vim/syntax/txt.vim - 用于标题标签的生成.
 	* $HOME/.vim/syntax/txt.vim - .txt文件的语法高亮文件.
 	* $HOME/.vim/plugin/txtbrowser.vim - 浏览工具.
 	* $HOME/.vim/doc/txtbrowser.txt - 英文帮助文档.
-	* $HOME/.vim/doc/txtbrowser.cnx - 中文帮助文档. (别忘了打开然后执行
-					  ":helptags ."生成标签)
-	* $HOME/.ctags - 用于标题标签的生成.
+	* $HOME/.vim/doc/txtbrowser.cnx - 中文帮助文档.
 
-由于版本1.1.1之前采用老的插件名, 请在安装前先删除低版本插件(主要是帮助文件, 原来的
-名字叫txt.txt和txt_cn.txt).
+安装后别忘了打开txtbrowser.txt然后执行 ":helptags ."生成标签.
 
 3)在你的.vimrc文件里加入下面三行, 然后重启你的Vim:
 
 	syntax on
-	let tlist_txt_settings = 'txt;c:content;f:figures;t:tables'
+	filetype plugin on
 	au BufRead,BufNewFile *.txt setlocal ft=txt
 
-4)本插件以utf8编码发布, 如果你的Vim设置默认encoding不为utf8, 例如为cp936(你可
-以在Vim执行":set encoding?"获得你的默认encoding值), 关于中文的语法有可能不能正
-确解析. 你需要打开跟每个文件安装后的文件(因为里面有中文字符), 执行命令":set
-fenc=cp936", 保存退出. 详细情况请阅读本文第6部分: "已知的问题".
+好了, 现在用Vim一个纯文本文件(打开本文也行), 执行":Tlist"命令, 现在你看到了什
+么? 你的纯文本将拥有漂亮的树状标签和语法高亮, 详情请参考 |txt-howto|.
 
-好了, 现在用Vim打开你的纯文本文件(以帮助文档txtbrowser.txt为例), 执行"Tlist"命
-令, 现在你看到了什么? 你的纯文本将拥有漂亮的树状标签和语法高亮, 详细情况请阅读
-本文第4部分: "功能和使用说明".
+[注意]本插件从版本1.1.1开始, 插件名正式从"txt.zip"更改为"TxtBrowser", 在这个版
+本之前的版本升级需要先卸载老版本.
 
-"文本浏览"插件可以和别的插件同时工作, 包括别的文件插件. 以"#2208: txtfmt"为例, 
-在你的.vimrc文件里加入下面两行即可(最好加在setlocal ft=txt这行之后):
+[注意]本插件从版本1.2.1开始, 插件结构进行了重大调整, 方便了用户安装. 在这个版
+本之前的版本升级需要先卸载掉老的.ctags文件.
 
-	au BufRead,BufNewFile *.txt runtime ftplugin/txtfmt.vim
-	au BufRead,BufNewFile *.txt runtime syntax/txtfmt.vim 
+[注意]"文本浏览"插件可以和别的插件同时工作, 包括别的文件插件. 以"#2208:
+txtfmt"为例, 在你的.vimrc文件里加入下面两行即可(最好加在setlocal ft=txt这行之
+后):
+
+        au BufRead,BufNewFile *.txt runtime ftplugin/txtfmt.vim
+        au BufRead,BufNewFile *.txt runtime syntax/txtfmt.vim 
 
 2.2 卸载
 
-根据上节提示的目录结构, 直接到相应的目录下将其文件删除即可, 不会残留下任何东东
-.
-
-2.3 可能会遇到的问题
-
-例1: Windows用户出现最多的问题是将.ctags放错位置, 因为很多人不清楚自己的HOME目
-录到底在哪里. 假设我登录Windows的用户名用winuser, 通常情况下, 我的$HOME应该是
-C:\Documents and Settings\winuser, 把.ctags放到该目录下即可.
-
-一个简单的判断你的HOME目录的方法是, 打开"开始-运行-cmd", 这时跳出来的dos窗口所
-在的目录一般情况下就是你的HOME目录.
-
-安装完成后用vim打开本文件(txt.txt), 此时你应该能看到语法高亮了. 执行":Tlist"打
-开taglist窗口, 你应该能看到本文的目录树被列在了taglist 窗口里. 如果还有问题, 
-你可以提交bug报告(guoyoooping@163.com).
-
-2.4 安装可选项
-
-很多人(尤其是Windows用户)不愿意把这些文件安装到$HOME目录下, 而是安装到Gvim的安
-装目录下, 这也是可以的. 假设你的vim的安装路径为"C:\Program Files\Vim", 该插件
-的安装目录应该为: 
-
-	C:\Program Files\Vim\vimfiles\syntax\txt.vim
-	C:\Program Files\Vim\vimfiles\doc\txt.txt(别忘了执行"helptag ."命令)
-	$HOME/.ctags
-
-也有人甚至连.ctags文件都不愿意放到$HOME目录下, 假设你想把.ctags文件"C:\Program
-Files\Vim\vimfiles\.ctags"目录下, 你需要在你的 .vimrc里加上下面一行:
-
-if (has("win32"))
-  Tlist_Ctags_Cmd = 'ctags.exe --options=C:\Program Files\Vim\vimfiles\.ctags'
-endif
-
-请注意这么做会屏蔽ctags调用$HOME/.ctags及其它位置下的.ctags文件, 大多数情况下这
-不是问题, 但是我必须告诉你这一副作用.
+根据上节的目录结构, 直接到相应的目录下将其文件删除即可, 不会残留下任何东东.
 
 ==============================================================================
-3. 功能和使用说明
+3. 功能和使用说明                                       *txt-howto*
 
 经过第一部分的简介和第二部分安装过程的预览, 你一定对本插件有了比较感性的认识. 
 本章则带你更深入地了解"纯文本浏览"插件的使用, 有时候你可能需要定制更适合你的配
 置.
 
-3.1 语法高亮功能					*txt-highlight*
+3.1 语法高亮功能                                        *txt-highlight*
 
 如果你经常从事文字工作, 想必认为纯文本是"黑白"的吧. "纯文本浏览"插件为你的文档
 加上语法高亮, 使关键的部分有颜色, 突出显示标题, 关键字, 列举项, 我想一定会增加
@@ -164,15 +144,15 @@ endif
 有一些文件不以.txt结尾, 但事实上也是纯文本, 我能让它也显示语法高亮吗? 答案是肯
 定的, 打开文件后, 只需要执行一下下面的命令即可:
 
-	:set ft=txt
+        :set ft=txt
 
 我在工作经常用到.log文件, 用这个方法能让我的log文件高亮关键字, 浏览起来挺方便
 的. 当然, 对于经常使用浏览log文件的也可以在你的.vimrc里加上下面的命令, 就不用
 每次都在vim里敲命令了.
 
-	au BufRead,BufNewFile *.log setlocal ft=txt
+        au BufRead,BufNewFile *.log setlocal ft=txt
 
-3.2 浏览文档的标题				 *txt-browser-title*
+3.2 浏览文档的标题                                 *txt-browser-title*
 
 如果你是一个程序员, 如果你用过taglist插件浏览源代码, 那你一定非常熟悉通过
 taglist窗口定位函数. 纯文本浏览插件的使用完全一样. 插件安装 完成后, 用
@@ -194,75 +174,125 @@ rfc文档通常在第一页会有一个封面, 然后是目录, 接着就是正�
 因此作者建议自己在撰写文档的时候, 不仅要采用标准的内容, 最好也要采用通用的格式
 标准, 不仅方便自己的浏览, 同时也便于大家的交流.
 
-3.3 浏览文档的图列表和表列表				*txt-browser-table*
+3.3 浏览文档的图列表和表列表                                *txt-browser-table*
 
 有些文档引用了大量的图和表, 有时需要快速的定位他们, "纯文本浏览"插件提供了高效
 的定位的手段, 方法和上一节"浏览文档的标题"一样, 直接在taglist窗口点击相应的图
 或表即可定位到正文.
 
-3.4 浏览文档中的URL					*txt-browser-url*
+3.4 浏览文档中的URL                                        *txt-browser-url*
 
-有时候想访问文档中的URL(如网页, Email地址等), 还需要打开一个网页浏览器, 在地址
-中输入地址才能查看.
+有时候想访问文档中的URL(如网页, Email地址, 文件等), 还需要打开一个网页浏览器, 
+在地址中输入地址才能查看.
 
 "纯文本浏览"插件从1.1.1版本起提供了从文档中直接打开URL的功能. 使用方法为将光标
-放到URL上, 执行命令":TxtBrowserUrl"即可, 也可以执行下面默认的映射:
+放到URL上, 执行命令":TGoto"即可, 也可以执行下面默认的映射:
 
-	<Leader>g 
+        <Leader>g 
 
-这里<Leader>是"mapleader"变量的值, 如果你没有做过设置, 这个值一般是"\", 即就是
-说你把光标放到URL上, 只需要敲一个"\"键, 然后再敲一下"g"键即可. 作者建议你设置
-自己"mapleader"的值(如用命令let mapleader = ","设置成","键), 因为我们的小拇指
-负担太重了, 设置到别的手指上有助于保护你的小拇指的健康^)^
+实际上这里的URL是广义的URL, 不光支持打一个http链接, 还支持file://, mailto://等
+格式 , 从1.2.8版本开始， 还将支持简写的Url, 如下面的URL都可以支持:
 
-3.5 在文档中查字典					*txt-browser-dict*
+	http://guoyoooping.blog.163.com
+	www.vim.org
+	mailto:guoyoooping@sohu.com
+	guoyoooping@sohu.com
+	file:///media/data/audio/casablanca.mp3
+	C:\Documents and Settings\ypguo\Desktop\tmp\sample.JPG
+	../audio/Childhood.Memory.ape
+	ftp://10.208.16.10
+
+将光标放到该URL上, 或者选中该URL, 执行<Leader>g, 即可调用系统默认播放器, 开始
+播放这个文件. 实际上, 所有系统支持的文件格式, 如.jpg, .pdf文件等效果都是一样的
+.
+
+[注意]这里<Leader>是"mapleader"变量的值, 如果你没有做过设置, 这个值一般是"\", 
+即就是说你把光标放到URL上, 只需要敲一个"\"键, 然后再敲一下"g"键即可. 作者建议
+你设置自己"mapleader"的值(如用命令let mapleader = ","设置成","键), 因为我们的
+小拇指负担太重了, 设置到别的手指上有助于保护你的小拇指的健康^)^
+
+3.5 在文档中查字典                                        *txt-browser-dict*
 
 不知道你英语好不好, 有时候看英文文档的时候遇到不认识的单词怎么办? "纯文本浏览"
-插件提供了一个途径, 把光标放到单词上, 执行命令":TxtBrowserWord"或下面的映射即可
-打开在线词典查单词.
+插件提供了一个途径, 把光标放到单词上, 或者选中要查找的单词， 执行命令 ":TFind"
+或下面的映射即可打开在线词典查单词.
 
-	<Leader>f 
+        <Leader>f 
 
-默认的在线词典是google/dictionary, 你也可以定制你自己喜欢的词典, 方法为: 打开
-你喜欢的词典页, 查一个单词"text", 查到单词后将地址栏里的地址复制下起, 设为全局
-变量TxtBrowser_Dict_Url的值. 例如你喜欢用"www.dict.cn"查单词, 查了一个单词
-"text"后浏览器的地址为"http://dict.cn/text", 那么在你的.vimrc里加下面的一句即
-可实现用"www.dict.cn"查单词:
+默认的在线词典是google/dictionary, 你也可以定制你自己喜欢的词典, 请参考
+|txt-dict|.
 
-引用自我的".vimrc"
-|
-|let TxtBrowser_Dict_Url='http://dict.cn/text'
-
-3.6 在文档中调用搜索引擎搜索			*txt-browser-search*
+3.6 在文档中调用搜索引擎搜索                        *txt-browser-search*
 
 有时候在浏览文档的时候看见一个热门词汇? 想要调用google搜一下吗? "纯文本浏览" 
-插件提供了一个快捷途径, 把光标放到单词上, 执行命令":TxtBrowserSearch"或下面的
-映射即可 打开在线词典查单词.
+插件提供了一个快捷途径, 把光标放到单词上, 或选中要查找的文本，执行命令
+":TSearch"或下面的映射即可打开在线词典查单词.
 
-	<Leader>s
+        <Leader>s
+
+默认搜索引擎是www.google.com , 你也可以定制你自己喜欢的搜索引擎, 请参考
+|txt-search-engine|
+
+3.7 开发中的功能                                                *txt-todo*
+
+其它功能, 正在开发中... 请关注最新动向. 同时欢迎给作者写信或登录作者的博客
+(http://guoyoooping.blog.163.com)表达您想要的功能, 同时欢迎提供技术支持.
+
+	* 高亮光标下的单词或选中的文本, 支持跨行.
+	* 查找选中的文本, 支持跨行.
+	* 标题标签支持折叠功能(Fold), 预计会在2.0版本中支持.
+	* 支持中文数字打头的标题, 如: 一、这是一个标题.
+	* 中文表和图标签的完善.
+	* 考虑是否支持类似于txt2tags风格的标题表示方法.
+
+==============================================================================
+4. 偏好定制                                                *txt-options*    
+
+TxtBrowser提供了很多个性化的定制功能, 并且还在增加中, 你可以定制下面的东东:
+
+4.1 标题级数                                                *txt-title-level*    
+
+一般的文章三级标题足够用了. 但是有时候文章比较长的时候也许你会觉得三级标题太多
+了, 满眼都是标题, 找个小标题要拖很长的鼠标. 有时候又觉得三级标题不够, 没有完全
+列出想要的内容, 你可以在.vimrc定制自己的标题级数(未定义为3级):
+
+let TxtBrowser_Title_Level = 2
+
+4.2 定制自己的字典                                        *txt-dict*
+
+默认的在线词典是www.google.cn/dictionary, 你也可以定制你自己喜欢的词典, 方法为
+: 打开你喜欢的词典页, 查一个单词"text", 查到单词后将地址栏里的地址复制下起, 设
+为全局变量TxtBrowser_Dict_Url的值. 例如你喜欢用"www.dict.cn"查单词, 查了一个单
+词 "text"后浏览器的地址为"http://dict.cn/text", 那么在你的.vimrc里加下面的一句
+即可实现用"www.dict.cn"查单词:
+
+let TxtBrowser_Dict_Url='http://dict.cn/text'
+
+4.3 定制自己的搜索引擎                                        *txt-search-engine*
 
 默认搜索引擎是www.google.com(google Chinese, 不同的国家和地区实际的引擎应该稍
-有区别), 你也可以定制你自己喜欢的搜索引擎, 方法和3.5节定制网络字典是一样的, : 
+有区别), 你也可以定制你自己喜欢的搜索引擎, 方法和上一节定制网络字典是一样的, 
 打开你喜欢的搜索引擎, 搜一个单词"text", 搜索结束后获得该网页的url, 设为全局变
 量Txtbrowser_Search_Engine的值. 例如你喜欢用"www.baidu.com"搜索, 查了一个单词
 "text"后浏览器的地址为"http://www.baidu.com/s?wd=text&oq=text&f=3&rsp=2", 那么
 在你的.vimrc里加下面的一句即可实现用"www.baidu.com"搜索:
 
-引用自我的".vimrc"
-|
-|let Txtbrowser_Search_Engine='http://www.baidu.com/s?wd=text&oq=text&f=3&rsp=2'
+let Txtbrowser_Search_Engine='http://www.baidu.com/s?wd=text&oq=text&f=3&rsp=2'
 
-3.7 其它浏览功能					*txt-browser-others*
+4.4 更多的定制功能                                        *txt-custoize-more*
 
-其它功能如从文档中直接打开光标所选url, 单词等, 正在开发中...新版本会 定期发布,
-请关注最新动向. 同时欢迎给作者写信或登录作者的博客
-(http://guoyoooping.blog.163.com)发表您想要的功能.
+很多其它的东东都可以定制, 如标题的格式, 自定义自己的关键字, 等. 我现在主要忙于
+TxtBrowser的稳定工作, 等有时间我会提供更多的定制选项. 同时也希望给我写信, 推荐
+您想要的定制功能. 近期可能实现的功能包括:
+
+	* 在.vimrc里定制自己的标题格式.
+	* 在.vimrc里定制自己需要高亮的文本, 以及高亮的颜色方案.
 
 ==============================================================================
-4. 关键元素的定义                             		*txt-element*
+5. 关键元素的定义                                             *txt-element*
 
 ------------------------------------------------------------------------------
-4.1 文本标题                                  			*txt-title*
+5.1 文本标题                                                          *txt-title*
 
 标题的格式:
 
@@ -282,8 +312,8 @@ rfc文档通常在第一页会有一个封面, 然后是目录, 接着就是正�
 
 本段文字是三级标题的内容.
 
-标签窗口最多只支持三级标题, 而语法高亮没有这个限制. 下面是标签窗口关于三级标题
-的定义:
+标签窗口最多只支持四级标题, 默认支持3级标题, 而语法高亮没有这个限制. 下面是标
+签窗口关于三级标题的定义:
 
 --regex-txt=/^([0-9]+\.?[ \t]+)([^,]+$)/\1\2/c,content/
 --regex-txt=/^(([0-9]+\.){1}([0-9]+\.?)[ \t]+)([^,]+$)/.   \1\4/c,content/
@@ -299,7 +329,7 @@ syn match txtTitle "^\d\s\+.\+\s*[^,。，]$"
 标题元素将同时用于列出文档结构和语法高亮.
 
 ------------------------------------------------------------------------------
-4.2 文本图                                  			*txt-figure*
+5.2 文本图                                                          *txt-figure*
 
 以空格打头, 后跟关键字"figure"的行定义为"文本图". 如下段文字中, 包含 "Figure 1:
 Example Message Flow"的那一行(注意该行是以空格打头的)是一个文本图. 该行将被列在
@@ -325,7 +355,7 @@ taglist窗口中.
 本元素的定义主要用于列出文件的结构图.
 
 ------------------------------------------------------------------------------
-4.3 文本表                                  			*txt-table*
+5.3 文本表                                                          *txt-table*
 
 以空格打头, 后跟关键字"table"的行定义为"文本表". 如下段文字中, 包含 "Table 1:
 Summary of header fields, A--O"的那一行(注意该行是以空格打头的)是一个文本图. 该
@@ -348,7 +378,7 @@ Summary of header fields, A--O"的那一行(注意该行是以空格打头的)�
 本元素的定义主要用于列出文件的结构图.
 
 ------------------------------------------------------------------------------
-4.4 文本关键词                                 		*txt-keywords*
+5.4 文本关键词                                                 *txt-keywords*
 
 下面的关键字定义为"文本关键字", 其定义在"txt.vim"文件中. 它们在文本中将根据重要
 程度显示为不同的颜色(和你正在使用的coloscheme有关). 你也可以将你关心的关键字加
@@ -360,7 +390,7 @@ syn keyword txtError error bug caution dropped
 本元素的定义主要用于语法高亮.
 
 ------------------------------------------------------------------------------
-4.5 文本超键接                                  		*txt-url*
+5.5 文本超键接                                                  *txt-url*
 
 文本中的超级键接定义为"文本超级键接", 主要包括网址, Email地址, ftp地址等, 请参
 考rfc1738(Uniform Resource Locators (URL))和rfc3986(Uniform Resource Identifier
@@ -368,29 +398,29 @@ syn keyword txtError error bug caution dropped
 也将尽量将其显示为带下划线的蓝色(具体表现根据你的coloscheme会稍有不同), 下面是
 例子:
 
-	guoyoooping@163.com
-	http://guoyoooping.blog.163.com/blog
-	ftp://192.168.1.5/ftpboot/username/example.txt
+        guoyoooping@163.com
+        http://guoyoooping.blog.163.com/blog
+        ftp://192.168.1.5/ftpboot/username/example.txt
 
 本元素的定义主要用于语法高亮.
 
 ------------------------------------------------------------------------------
-4.6 文本Email关键字                                  		*txt-email*
+5.6 文本Email关键字                                                  *txt-email*
 
 Email中的关键字定义如下, 例子如下:
 
 syn match txtEmailMsg '^\s*\(From\|De\|Sent\|To\|Para\|Date\|Data\|Assunto\|Subject\):.*'
 syn match txtEmailQuote '^\(>\($\| \)\)\+'
 
-	From: San Zhang(R&D Center Beijing) 
-	Sent: 2008年11月27日 13:17
-	To: Si Li, Wu Wang, Liu Chen
-	Subject: RE: 你们都不踢球?
+        From: San Zhang(R&D Center Beijing) 
+        Sent: 2008年11月27日 13:17
+        To: Si Li, Wu Wang, Liu Chen
+        Subject: RE: 你们都不踢球?
 
 本元素的定义主要用于语法高亮.
 
 ------------------------------------------------------------------------------
-4.7 文本引号内文字                                  		*txt-quotes*
+5.7 文本引号内文字                                                  *txt-quotes*
 
 大多数情况下, 人们用引号把文字括起来以引起注意, 因此我们定义在引号内的文字为"文
 本引号内文字", 并为其添加语法高亮, 目的是为了引起人们的注意. 下面是定义和例子:
@@ -399,12 +429,12 @@ syn match   txtQuotes     '["“][^"”]\+\(\n\)\=[^"”]*["”]'hs=s+1,he=e-1
 
 例子:
 
-	"good example"
+        "good example"
 
 本元素的定义主要用于语法高亮.
 
 ------------------------------------------------------------------------------
-4.8 文本括号内文字                                	*txt-bracket*
+5.8 文本括号内文字                                        *txt-bracket*
 
 多数情况下, 人们需要关注用括号内的文字, 因此我们定义在括号内的文字为"文本括号内
 文字", 并为其添加语法高亮, 目的是为了引起人们的注意. 这里的括号包括圆括号, 尖括
@@ -413,19 +443,17 @@ syn match   txtQuotes     '["“][^"”]\+\(\n\)\=[^"”]*["”]'hs=s+1,he=e-1
 syn match   txtParentesis "[(（][^)）]\+\(\n\)\=[^)）]*[)）]" contains=txtUrl
 syn match txtBrackets     '<[^<]\+\(\n\)\=[^<]*>'hs=s+1,he=e-1 contains=txtUrl
 syn match txtBrackets     '\[[^\[]\+\(\n\)\=[^\[]*\]'hs=s+1,he=e-1 contains=txtUrl
-syn region txtBrackets    matchgroup=txtOperator start="{"        end="}" contains=txtUrl
 
 例子:
 
-	(good example)
-	<good example>
-	[good example]
-	{good example}
+        (good example)
+        <good example>
+        [good example]
 
 本元素的定义主要用于语法高亮.
 
 ------------------------------------------------------------------------------
-4.9 文本列举                                  			*txt-list*
+5.9 文本列举                                                          *txt-list*
 
 有时人们在列举一组相似的事情时, 喜欢在这些列举的一行前冠以"*", "-"等符号, 我们
 定义以这些符号打头的行(有些符合如"5."需要前面有空格)为"文本列举". 下面是定义和
@@ -448,7 +476,7 @@ syn match txtList "^\s\+\d\+\.\d\@!"
 本元素的定义主要用于语法高亮.
 
 ------------------------------------------------------------------------------
-4.10 文本引用                                  		*txt-reference*
+5.10 文本引用                                                  *txt-reference*
 
 有时需要引用其它人的描述或在回复邮件时需要引用原文, 这时可以高亮引用的部分.
 
@@ -487,59 +515,39 @@ I'll check out how to configure my mailer with Google Groups for this list.
 本方法元素主要用于语法高亮.
 
 ==============================================================================
-5. 版权~ 						*txt-license*
+6. 常见的问题~                                                         *txt-faqs*
 
-Permission is hereby granted to use and distribute the "Plain Text Browser"
-plugin, with or without modifications, provided that this copyright notice is
-copied with it. Like anything else that's free, "Plain Text Browser"
-plugin.vim is provided *as is* and comes with no warranty of any kind, either
-expressed or implied. In no event will the copyright holder be liable for any
-damamges resulting from the use of this software.
-
-==============================================================================
-6. 常见的问题~							 *txt-faqs*
-
-6.1 在Tlist时报错: Unknown language "txt" in "language-force" option
-
-问: 高亮正常,但在Tlist时报如下错误:
-
-	aglist: Failed to generate tags for d:\BAK\aaa.txt
-	@d:\BAK>d:\Tools\Editors\gVim\Utility\ctags\ctags.exe -f - --format=2
-	-excmd=pattern --fields=nks --sort=yes --language-force=txt
-	--txt-types=cft d:\BAK\aaa.txt" ^@ctags.exe: Unknown language "txt" in
-	"language-force" option 
-
-回答:
-
-我怀疑产生错误的原因是.ctags文件放错了位置. .ctags文件应该放在$HOME/目录下
-
-6.2 有关中文(或其它宽字节语言)的taglist不能显示或乱码的问题
+6.1 有关Windows下中文文件名(或其它宽字节语言)的taglist不能显示的问题
 
 问题1: Windows操作系统下如果路径或文件名里有中文(或其它文字)字符, taglist不能
 正常显示
-
-问题2: 如果文件的enc和fenc值不等时, 标题标签显示乱码
 
 答: 这是taglist的问题, taglist现在的版本没有考虑不同编码的字符的转换问题, 所有
 的问题基本上只要打上下面的patch都可以解决: 如果你不熟悉diff文件和patch命令, 也
 可以直接到这里下载修正过的taglist.vim(基于 taglist.vim v4.5), 修正了这个问题,
 TxtBrowser安装后不再需要手动转换编码格式:
 
-	http://att.newsmth.net/att.php?p.731.54628.3814.vim
-
-如果你的Windows不是使用cp936编码, 把下面diff中文字符串"cp936"改成你的Windows相
-应的编码格式就行了(如cp950).
+	http://att.newsmth.net/att.php?p.731.55149.1226.vim
 
 taglist.diff(patch命令的使用方法: patch taglist.vim taglist.diff)
-|
 |Index: taglist.vim
 |===================================================================
 |RCS file: /cygdrive/d/cvsroot/docu/script/vim/taglist/taglist.vim,v
-|retrieving revision 1.1
-|diff -u -p -r1.1 taglist.vim
-|--- taglist.vim	13 Mar 2009 04:16:54 -0000	1.1
-|+++ taglist.vim	23 Feb 2010 15:27:37 -0000
-|@@ -2177,6 +2177,13 @@ function! s:Tlist_Parse_Tagline(tag_line
+|retrieving revision 1.1.1.1
+|diff -u -p -r1.1.1.1 taglist.vim
+|--- taglist.vim	13 Mar 2009 04:16:54 -0000	1.1.1.1
+|+++ taglist.vim	24 Mar 2010 14:27:57 -0000
+|@@ -103,6 +103,9 @@ if !exists('loaded_taglist')
+|         endif
+|     endif
+| 
+|+    " Taglist doesn't work with multibyte language because of encoding
+|+    " issue. ypguo fix it and mark it. The fix start with ypguo
+|+    let Tlist_Enc_Patch = 1
+| 
+|     " Automatically open the taglist window on Vim startup
+|     if !exists('Tlist_Auto_Open')
+|@@ -2177,6 +2180,13 @@ function! s:Tlist_Parse_Tagline(tag_line
 |     " Extract the tag name
 |     let tag_name = strpart(a:tag_line, 0, stridx(a:tag_line, "\t"))
 | 
@@ -553,7 +561,7 @@ taglist.diff(patch命令的使用方法: patch taglist.vim taglist.diff)
 |     " Extract the tag scope/prototype
 |     if g:Tlist_Display_Prototype
 |         let ttxt = '    ' . s:Tlist_Get_Tag_Prototype(s:fidx, s:tidx)
-|@@ -2264,8 +2271,9 @@ function! s:Tlist_Process_File(filename,
+|@@ -2264,8 +2274,9 @@ function! s:Tlist_Process_File(filename,
 |         set noshellslash
 |     endif
 | 
@@ -565,20 +573,28 @@ taglist.diff(patch命令的使用方法: patch taglist.vim taglist.diff)
 |         " Windows does not correctly deal with commands that have more than 1
 |         " set of double quotes.  It will strip them all resulting in:
 |         " 'C:\Program' is not recognized as an internal or external command
-|@@ -2285,6 +2293,12 @@ function! s:Tlist_Process_File(filename,
+|@@ -2285,6 +2296,20 @@ function! s:Tlist_Process_File(filename,
 | 
 |     call s:Tlist_Log_Msg('Cmd: ' . ctags_cmd)
 | 
-|+    "ypguo add: win32 cmd(shell) need 'cp936' characters, so convert it before
-|+    "pass the parameters.
-|+    if has('win32') && !has('win32unix') && (&enc != 'cp936')
-|+	    let ctags_cmd = iconv(ctags_cmd, &enc, "cp936")
+|+    "ypguo add: win32 cmd(shell) need 'cpxxx' characters, so convert it before
+|+    "pass the parameters, if chcp doesn't work, please set it maually.
+|+    if executable("chcp")
+|+	    let code_page = 'cp' . matchstr(system("chcp"), "\\d\\+")
+|+	    call s:Tlist_Log_Msg('code_page: ' . code_page)
+|+    else
+|+	    " If chcp doesn't work, set its value manually here.
+|+	    let code_page = 'cp936'
+|+    endif
+|+
+|+    if has('win32') && !has('win32unix') && (&enc != code_page)
+|+	    let ctags_cmd = iconv(ctags_cmd, &enc, code_page)
 |+    endif
 |+
 |     " Run ctags and get the tag list
 |     let cmd_output = system(ctags_cmd)
 | 
-|@@ -3338,6 +3352,12 @@ function! s:Tlist_Window_Jump_To_Tag(win
+|@@ -3338,6 +3363,12 @@ function! s:Tlist_Window_Jump_To_Tag(win
 |     if tidx != 0
 |         let tagpat = s:Tlist_Get_Tag_SearchPat(fidx, tidx)
 | 
@@ -591,59 +607,48 @@ taglist.diff(patch命令的使用方法: patch taglist.vim taglist.diff)
 |         " Highlight the tagline
 |         call s:Tlist_Window_Highlight_Line()
 |     else
-	
-6.3 文档更新后taglist好像无法及时更新.
+        
+6.2 文档更新后taglist好像无法及时更新.
 
 问: 文档更新后,taglist好像无法及时更新. 
 
 答: 文件保存后执行"TlistUpdate"即可, 你也可以把这个命令映射成快捷键加到你的
 _vimrc里
 
-	nmap <silent> <F5> <ESC>:TlistUpdate<RETURN>
+        nmap <silent> <F5> <ESC>:TlistUpdate<RETURN>
 
-6.4 taglist窗口里标题被显示多次
+6.3 taglist窗口里标题被显示多次
 
 问: 不知道为什么现在的我文档全部显示了重复的目录，我是指在左边栏会显示如下：
 
-	1. xxxxxxxx
-	1. xxxxxxxx
-	2. cccccccc
-	2. cccccccc
-	...
-	...
+        1. xxxxxxxx
+        1. xxxxxxxx
+        2. cccccccc
+        2. cccccccc
+        ...
+        ...
 
 就是说，都是重复的，不知道为什么会这样？估计是taglist的问题？盼解答并期待新版
 本。
 
-答: 出现这种情况的原因应该是你的./目录还有一份.ctags文件, 你把它删除了应该就OK
-了.
+答: 出现这种情况的原因应该是你的$HOME目录还有一份.ctags文件, 你把它删除了应该就OK
+了. 由于早期的TxtBrowser使用配置文件定义标签, 新版则采用定义变量的方式定义标签
+, 两种方法都是有效的, 所以使用新的版本而保留老的.ctags文件的话, 标签可能会显示
+2次.
 
-ctags读取配置文件比较怪异, 不像其它的linux程序一样有优先级, 这哥儿们是一古脑的
-读取下面位置上的配置文件, 有一个读一次, 有二个读2次...
-
-	/ctags.cnf (on MSDOS, MSWindows only)
-	/etc/ctags.conf
-	/usr/local/etc/ctags.conf
-	$HOME/.ctags
-	$HOME/ctags.cnf (on MSDOS, MSWindows only)
-	.ctags
-	ctags.cnf (on MSDOS, MSWindows only)
-
-所以如果这些位置有重复的.ctags(或ctags.cnf), 相当于title标签被定义了2次.
-
-6.5 taglist窗口标题不能正常显示:
+6.4 taglist窗口标题不能正常显示:
 
 问: 打开taglist窗口后标题不能被正常示, 如下图所示:
 
-	txtbrowser_cnx.txt (D:\release\1.1.6\doc)
-	  content
-	    .       1000001.1.1 标题1.1.1
-	    .   1000001.1 标题1.1
-	    .   2.1 安装插件
-	    .   2.2 卸载
-	    .   2.3 可能会遇到的问题
-	    .   2.4 安装可选项
-	    .   3.1 语法高亮功能
+        txtbrowser_cnx.txt (D:\release\1.1.6\doc)
+          content
+            .       1000001.1.1 标题1.1.1
+            .   1000001.1 标题1.1
+            .   2.1 安装插件
+            .   2.2 卸载
+            .   2.3 可能会遇到的问题
+            .   2.4 安装可选项
+            .   3.1 语法高亮功能
 
 答: 问题的原因不是标题没有被正常显示, 而是显示的顺序不对, 在taglist窗口执行
 "s"命令即可正常显示. 错误的原因是你一定在你的.vimrc里配置了tag的显示顺序(如下
@@ -653,42 +658,38 @@ ctags读取配置文件比较怪异, 不像其它的linux程序一样有优先�
 
 解决的办法是删除这个配置或者将上面的配置修改成:
 
-	au BufRead,BufNewFile *.txt let Tlist_Sort_Type = "order"
+        au BufRead,BufNewFile *.txt let Tlist_Sort_Type = "order"
 
 ==============================================================================
-7. 下一步计划~					 		*txt-todo*
+7. 问题反馈~                                                 *txt-bug*
 
-1) 支持中文数字打头的标题, 如: 一、这是一个标题.
+我尽量在发布时多做测试, 争取尽量减少bug, 但是如果你发现了bug, 非常欢迎直接向我
+报告. 做为开源软件, 用户反馈是软件成熟的重要途径, 所以非常感谢您的支持. bug反
+馈可用下面的任意途径:
 
-2) 中文表和图标签的完善.
-
-3) 考虑是否支持类似于txt2tags风格的标题表示方法.
+	我的Email: mailto://guoyoooping@163.com
+	ping的博客: http://guoyoooping.blog.163.com
+	我经常去的论坛: 水木vim版
 
 ==============================================================================
+8. 版权~                                                 *txt-license*
 
-8. 发行记录~					 	*txt-changelog*
+GPL
+
+==============================================================================
+9. 发行记录~                                                 *txt-changelog*
+
+本人写插件经验不是很丰富, 所以更新频繁, 下面仅列举重要更新.
 
 2009-12-26 1.0
-	Initial upload
-2009-12-29 1.0.2
-	1) delete some the personal configuration in txt.vim, it might not be
-	fit for all.
-	2) Add an example file to illustrate.
-2010-01-01 1.0.3
-	Add the help document.
-2010-01-03  1.0.4
-	Update the help document. Give the definition of every element and
-	examples.
-2010-01-10  1.0.5
-	1) Delete all the personal setting in txt.vim, such as "hi clear
-	Normal", "set bg&", users should set their own prefer setting.
-	2) Change the definition of the figure in .ctags. Being compatible
-	with tables without name. such as expression like "figure 1".
-	3) Change the filetype of the txt.txt to "txt", Opening the txt.txt
-	with vim directly could have a preview of this plugin. 
-2010-01-16  1.0.6
-	1) Add the Chinese help document. You can install or don't install it.
+        1)第一版发表
+2010-01-23 1.1
+	1)增加了帮助文档
+	2)去掉了插件中个人的配置
+2010-03-06 1.2
+	1)插件名正式从"txt.zip"改成"TxtBrowser"
+	2)增加从文本文件中直接打开URL的功能
+	3)修正了中文标题不能显示的bug.
 
 ==============================================================================
-
 vim:tw=78:ts=8:noet:ft=txt:
