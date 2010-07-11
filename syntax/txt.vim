@@ -1,7 +1,7 @@
 "Script_name: txt.vim
 "Author: guoyoooping@163.com
-"Date: 2010/07/09
-"Release: 1.3.2
+"Date: 2010/07/11
+"Release: 1.3.3
 "Description: syntax for plain/text.
 "Language: text/plain :)
 "Location: $HOME/.vim/syntax or $VIMRUNTIME/syntax/

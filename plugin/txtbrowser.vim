@@ -1,7 +1,7 @@
 " txtbrowser.vim:	Utilities to browser plain text file.
-" Release:		1.3.2
+" Release:		1.3.3
 " Maintainer:		ypguo<guoyoooping@163.com>
-" Last modified:	2010.07.09
+" Last modified:	2010.07.11
 " License:		GPL.
 
 " ****************** Do not modify after this line ************************
@@ -13,7 +13,7 @@ set cpo&vim
 if exists("g:txtbrowser_version")
     finish "stop loading the script
 endif
-let g:txtbrowser_version = "1.3.2"
+let g:txtbrowser_version = "1.3.3"
 
 "=Options===========================================================
 " User defined web dictionary
@@ -55,8 +55,8 @@ endif
 if ("" == mapcheck("*", "v"))
     vnoremap <silent> * y/<C-R>=substitute(escape(@", '.*\\/[]'), "\n", '\\n', 'g')<CR><CR>
 endif
-if ("" == mapcheck("?", "v"))
-    vnoremap <silent> ? y?<C-R>=substitute(escape(@", '.*\\/[]'), "\n", '\\n', 'g')<CR><CR>
+if ("" == mapcheck("#", "v"))
+    vnoremap <silent> # y?<C-R>=substitute(escape(@", '.*\\/[]'), "\n", '\\n', 'g')<CR><CR>
 endif
 
 "Define the user commands:
