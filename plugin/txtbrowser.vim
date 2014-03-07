@@ -290,7 +290,7 @@ function! s:TxtbrowserOpenUrl (url)
 	    exec ':silent !cmd /q /c start "\""dummy title"\"" ' . "\"" . a:url . "\""
 	elseif (has("unix"))
 	    "exec ':silent !firefox ' . "\"" . a:url . "\" & "
-	    exec ":silent !xdg-open \"" . a:url . "\""
+	    exec ":silent !xdg-open \"" . a:url . "\" &"
 	endif
     endif
     exec ":redraw!"
