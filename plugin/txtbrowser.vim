@@ -282,16 +282,23 @@ function! s:TxtbrowserOpenUrl (url)
     endif
 
     if exists("g:default_web_browser")
-	exec ":silent ! " . g:default_web_browser . " \"" . a:url . "\" &"
+		if (has("mac"))
+			exec "!g:default_web_browser \"" . a:url . "\""
+		elseif (has("win32") || has("win32unix"))
+			exec ":silent !start " . g:default_web_browser . " \"" . a:url . "\""
+		elseif (has("unix"))
+			exec ":silent !" . g:default_web_browser . " \"" . a:url . "\" &"
+		endif
     else
-	if (has("mac"))
-	    exec "!open \"" . a:url . "\""
-	elseif (has("win32") || has("win32unix"))
-	    exec ':silent !cmd /q /c start "\""dummy title"\"" ' . "\"" . a:url . "\""
-	elseif (has("unix"))
-	    "exec ':silent !firefox ' . "\"" . a:url . "\" & "
-	    exec ":silent !xdg-open \"" . a:url . "\""
-	endif
+		if (has("mac"))
+			exec "!open \"" . a:url . "\""
+		elseif (has("win32") || has("win32unix"))
+			exec ':silent !cmd /q /c start "\""dummy title"\"" ' . "\"" . a:url . "\""
+			let g:test=':silent !cmd /q /c start "\""dummy title"\"" ' . "\"" . a:url . "\""
+		elseif (has("unix"))
+			"exec ':silent !firefox ' . "\"" . a:url . "\" & "
+			exec ":silent !xdg-open \"" . a:url . "\" &"
+		endif
     endif
     exec ":redraw!"
 endfunction
